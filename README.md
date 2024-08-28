@@ -1,30 +1,31 @@
 # JavaLearn
 
 #### 介绍
-学习java之路
+学习java之路——由于前两年是没有规范性的学习，掌握并不全面，我需要重新学习Java，重新扎实基础。
 
-#### 软件架构
-软件架构说明
+#### Java学习之路
+介绍：Java视频共有199集，我决定分为Java基础为模块A1，项目实战为模块B1/B2，Java加强为模块A2，Java高级技术为模块A3，Java基础结课考试测试为模块C1。
 
-#### 使用说明
+A1模块：内有
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+A2模块：
 
-#### 参与贡献
+A3模块：
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+B1模块：
+
+B2模块：
+
+C1模块：
+
+#### 学习计划
+
+从8月29日起，不断学习Java课程，争取在9月7日之时学完整个课程，整整十日。期间不断向gitee提交，以证学习成果。
+
+在学习期间准备MCmod的开发准备，学完Java就学习MCmod开发。
 
 
-#### 特技
+#### 参考
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+1. 学习主要链接来源于[黑马程序员]: https://www.bilibili.com/video/BV1gb42177hm?p=1&amp;vd_source=2140b8696bb75ad7bd33e1195bf24372
+2.  其他可能用得上的链接

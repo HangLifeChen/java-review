@@ -2,7 +2,7 @@
 
 ### 一、介绍
 
-A1简介：
+A1简介：关于java的基本语法学习，加上一个综合实践
 
 ### 二、基本语法
 
@@ -144,6 +144,9 @@ A1简介：
 ```java
     Scanner scanner=new Scanner(System.in);//创建一个Scanner扫描对象
     int n=scanner.nextInt();//获取用户输入的整数
+    double d=scanner.nextDouble();//获取用户输入的浮点数
+    String s=scanner.nextLine();//获取用户输入的字符串
+    
 ```
 2、输出：程序向用户输出数据。（System.out.println）
 
@@ -159,7 +162,7 @@ A1简介：
 
 5、赋值运算符：=、+=、-=、*=、/=、%=
 
-6、其他运算符：&、|、^、~、<<、>>、>>>、&&、||、!、?:
+6、其他运算符：&、|、^、~、<<、>>、>>>、?:
 ```java
     int a=10;
     int b=20;
@@ -176,6 +179,134 @@ A1简介：
     System.out.println("乘法：a*b="+a*b);//乘法
     System.out.println("除法：a/b="+a/b);//除法
     System.out.println("取余：a%b="+a%b);//取余
+```
+
+#### （十二）、赋值
+
+1、赋值运算符：=、+=、-=、*=、/=、%=（先运算后赋值，a=a+b）
+
+3、三元表达式：表达式？值1：值2（真：假）
+
+#### （十三）、综合实践
+
+##### 1、猜数字
+说明：猜数字游戏，计算机随机生成一个三位数，用户输入一个数字，计算机判断数字大小，如果猜对了，游戏结束，否则继续猜。(见A1的GuessNumber类或如下代码)
+```java
+package com.rasion.main;
+import java.util.Scanner;
+import static com.rasion.main.BasicJava.getRandom;
+public class GuessNumber {
+    public static void main(String[] args) {
+        while (true) {
+            guessNumberInterface();
+            if (scannerNumber() == 2) {
+                System.out.println("游戏结束");
+                break;
+            } else {
+                int a = getRandom(3);//这里给的是三位数
+                int b = 0;
+                while (true) {
+                    System.out.println("请输入一个数字");
+                    b = scannerNumber();
+                    ifOrnot(b, a);
+                    if (a == b) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void guessNumberInterface() {
+        System.out.println("======猜数字游戏======");
+        System.out.println("      1.开始游戏");
+        System.out.println("      2.退出游戏");
+    }
+
+    public static int scannerNumber() {
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
+    }
+
+    public static void ifOrnot(Integer a, Integer b) {
+        if (a > b) {
+            System.out.println("猜大了");
+        } else if (a < b) {
+            System.out.println("猜小了");
+        } else {
+            System.out.println("猜对了");
+            return;
+        }
+//        System.out.println("数字是"+b);
+    }
+}
+```
+
+**注意：其中随机数也可以为：**
+```java
+    import java.util.Random;
+    Random random=new Random();
+    int number=random.nextInt(100);//生成0-99的随机数
+    int n=random.nextInt(25)+25;//生成25-50间的随机数
+```
+
+##### 2、验证码
+说明：可以生成一个指定位数的验证码，验证码由数字和字母组成。(见A1的VerificationCode类或如下代码)
+```java
+package com.rasion.main;
+import java.util.Scanner;
+public class VerificationCode {
+    public static void main(String[] args) {
+        //生成指定位数的验证码，验证码由数字、大小写字母组成
+        System.out.println("请输入验证码位数：");
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();//验证码位数
+        System.out.println(getCode(n));
+    }
+    public static String getCode(int n) {
+        String code = "";
+        for (int i = 0; i < n; i++) {
+            int type = (int) (Math.random() * 3);//0-9 1-26 2-26
+            switch (type) {
+                case 0:
+                code += (int) (Math.random() * 10);
+                break;
+                case 1:
+                code += (char) (Math.random() * 26 + 'a');
+                break;
+                case 2:
+                code += (char) (Math.random() * 26 + 'A');
+            }
+        }
+        return code;
+    }
+}
+```
+##### 3、找到所有素数
+
+说明：在1-1000之间找到所有素数。(见A1的FindPrime类或如下代码)
+```java
+package com.rasion.main;
+public class FindPrime {
+    public static void main(String[] args) {
+    //找到所有素数
+    int temp=0;
+    for(int i=1;i<=1000;i++){
+        if(isPrime(i)){
+                temp++;
+                System.out.print(i+"\t ");
+                if(temp%10==0) System.out.println();//十个为一排
+            }
+        }
+    }
+    public static boolean isPrime(int n) {//判断是否为素数
+        if (n<=1){return false;}
+        for(int i=2;i<=Math.sqrt(n);i++){
+            if(n%i==0){return false;}
+        }
+        return true;
+    }
+}
 ```
 
 ### 三、参考

@@ -2,6 +2,13 @@ package com.rasion.main;
 
 import java.util.Scanner;
 
+/*相关快捷键操作
+main/psvm,sout快速输入相关代码
+ctrl+d 复制一行
+ctrl+x 删除所在行
+ctrl+alt+l 格式化代码
+alt+shift+上/下 移动代码到上一行/下一行
+ctrl+/ 注释代码 */
 public class BasicJava {
     public static void main(String[] args) {
         System.out.println("Hello World!!");
@@ -19,22 +26,21 @@ public class BasicJava {
 //        factorial();//（十）、输入输出,为输出阶乘
 //        operator();//（十一）、运算符
 //        receive(6);//（十二）、赋值
-//        receive3(20);//三元运算,输出大于等于10的数
+        receive3(20);//三元运算,输出大于等于10的数
     }
-/**(二)、注释
- * 这是文档注释
- * */
+    /**(二)、注释
+     * 这是文档注释
+     * */
     /*
     这是多行注释
      */
-//这是单行注释
-    public static void printHello(Integer n){
-        for (int i = 0; i <n ; i++) {
-            System.out.println("hello");
-        }
+    //这是单行注释
+    public static void printHello(Integer n){//（一）、创建功能
+        for(int i=1;i<n+1;i++)
+        System.out.println("Hello world"+i);
     }
 
-//(三)、打印常见的字面量
+    //(三)、打印常见的字面量
     public static void printLiteral(){
         System.out.println("Hello world");//字符串
         System.out.println(true);//布尔值
@@ -55,12 +61,16 @@ public class BasicJava {
         System.out.println("Hello\u0000world");//Unicode码
         System.out.println("======================");
     }
-    //(四)变量
+
+    //(四)、变量
     public static void printVariable(Integer n){
+        //定义变量：数据类型 变量名=值;
         int age=10;
         System.out.println("age="+age+" year="+n);
+        //为什么要定义变量？     减少代码的冗余和错误率，提高代码的可读性
     }
-    //(五)、数据类型
+
+    //（五）、数据类型
     public static void printDataType(){
         System.out.println("byte类型："+Byte.MAX_VALUE+" "+Byte.MIN_VALUE);
         System.out.println("short类型："+Short.MAX_VALUE+" "+Short.MIN_VALUE);
@@ -71,20 +81,17 @@ public class BasicJava {
         System.out.println("char类型："+Character.MAX_VALUE+" "+Character.MIN_VALUE);
         System.out.println("boolean类型："+true+" "+false);
     }
+
     //（七）、方法案例
     //定义一个方法，比较任意两个整数大小
-    public static int compare(int a,int b){
-//       if (a>b){
-//           return a;
-//       }else if (a<b){
-//           return b;
-//       }else {
-//           return -1;
-//       }
-        //三元表达式
-//        return a > b ? a : b;
-        //Math库
-        return Math.max(a,b);
+    public static void compare(int a,int b){
+        if(a>b){
+            System.out.println(a+">"+b);
+        }else if(a<b){
+            System.out.println(a+"<"+b);
+        }else{
+            System.out.println(a+"="+b);
+        }
     }
     //获取一个指定位数的随机数
     public static int getRandom(int n){
@@ -132,11 +139,6 @@ public class BasicJava {
         Scanner scanner=new Scanner(System.in);//创建一个Scanner对象,得到一个Scanner扫描对象
         System.out.println("请输入一个整数：");
         int n=scanner.nextInt();//获取用户输入的整数
-
-        //遇到 空格 / 回车 / Tab 就结束
-        String s1=scanner.next();
-        //只有遇到回车再结束
-        String s2=scanner.nextLine();
         int result=1;
         for(int i=1;i<=n;i++){
             result*=i;
@@ -191,5 +193,4 @@ public class BasicJava {
         int c=a>b?a:b;//三元运算符，a>b为true则c=a，否则c=b
         System.out.println("c="+c);
     }
-
 }

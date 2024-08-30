@@ -93,6 +93,91 @@ A1简介：
 
 标识符：标识符是程序中用来唯一标识变量、方法、类、接口、数组等名称的。标识符不能以数字开头，不能包含空格，不能包含特殊字符，不能包含中文。
 
+#### （七）、方法
+
+定义：方法是用来封装一段代码，让代码更加 modular、reusable、readable，方法代表一个功能，可以接收数据并进行处理，返回处理后的结果。
+
+    方法完整格式：修饰符 返回值类型 方法名(参数列表){方法体（需要执行的功能代码）}
+
+方法调用：**方法名（参数列表）**
+
+    注意：
+    方法的返回值：无返回值void类型和有返回值的数据类型。
+    方法的参数：无参数、有参数。
+    方法可以重载的：方法名相同，参数列表不同。通过方法名称标记同一功能，通过参数进行差异化。
+    无返回值的方法可以直接通过单独的return语句，立即结束当前方法的执行。
+
+#### （八）、类型转换
+
+1、存在不同类型的变量赋值给其他类型的变量，称为类型转换。
+
+2、自动类型转换：范围小的数据类型可以自动转换为范围大的数据类型，如：int转long、float转double。
+
+3、强制类型转换：范围大的数据类型不能直接转换为范围小的数据类型，需要使用强制类型转换。
+
+```java
+    double c=10.0;//double为8位浮点数，int为4位整数
+    int d=(int)c;//强制类型转换,若数据过大，强转后数据溢出，则结果为出错
+    System.out.println(d);//强制转换后只会把double的后4位转换为int，丢掉小数保留整数
+    System.out.println((int) c);
+```
+
+#### （九）、表达式的自动类型提升
+
+1、表达式的最终结果类型是由表达式中的最高类型决定的。
+
+2、在表达式中，如果存在byte、short、char类型，则表达式中的所有数据类型都会自动提升为int类型。
+
+```java
+    public static double expression(int a, byte b, double c, char d){
+        return a+b+c+d;
+    }
+    public static int expression(byte a,byte b){
+        return a+b;
+    }
+```
+
+#### （十）、输入输出
+
+1、输入：程序读取用户输入的数据。
+
+```java
+    Scanner scanner=new Scanner(System.in);//创建一个Scanner扫描对象
+    int n=scanner.nextInt();//获取用户输入的整数
+```
+2、输出：程序向用户输出数据。（System.out.println）
+
+#### （十一）、运算符
+
+1、算术运算符：+、-、*、/、%
+
+2、关系运算符：==、!=、>、<、>=、<=
+
+3、逻辑运算符：&&、||、!
+
+4、位运算符：&、|、^、~、<<、>>、>>>
+
+5、赋值运算符：=、+=、-=、*=、/=、%=
+
+6、其他运算符：&、|、^、~、<<、>>、>>>、&&、||、!、?:
+```java
+    int a=10;
+    int b=20;
+//若自增自减单独使用，不用区分运算符是否在前或后，结果都一样
+    int c=++a;//先自增再赋值，此时c=11,a=11
+    System.out.println("先自增再赋值：c="+c+" a="+a);
+    int d=a++;//先赋值再自增，此时d=11,a=12
+    System.out.println("先赋值再自增：d="+d+" a="+a);
+    
+    System.out.println("加法：a+b="+(a+b));//加法
+    System.out.println(a+'b'+"abc");//运算+连接
+    System.out.println("abc"+a+'b');//连接
+    System.out.println("减法：a-b="+(a-b));//减法
+    System.out.println("乘法：a*b="+a*b);//乘法
+    System.out.println("除法：a/b="+a/b);//除法
+    System.out.println("取余：a%b="+a%b);//取余
+```
+
 ### 三、参考
 
 1. 学习主要链接来源于[[黑马程序员](https://www.bilibili.com/video/BV1gb42177hm?p=1&amp;vd_source=2140b8696bb75ad7bd33e1195bf24372)]: https://www.bilibili.com/video/BV1gb42177hm?p=1&amp;vd_source=2140b8696bb75ad7bd33e1195bf24372

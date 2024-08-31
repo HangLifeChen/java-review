@@ -1,3 +1,5 @@
+package com.rasion.main;
+
 public class DoubleDimensionalArray {
     public static void main(String[] args) {//（二）、二维数组
         int[][] array = createArray(3, 4);

@@ -1,3 +1,5 @@
+package com.rasion.main;
+
 public class Poker {
     public static void main(String[] args) {
         pokerStart();

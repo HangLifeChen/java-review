@@ -1,3 +1,5 @@
+package com.rasion.main;
+
 import java.util.Scanner;
 
 public class NumberPuzzle {

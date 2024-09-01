@@ -1,7 +1,7 @@
 package com.rasion.oop;
 
 public class User {
-    private String name;
+    private String name;//对象变量就是成员变量
     private Integer age;
     private boolean gender;
     private String email;
@@ -15,7 +15,14 @@ public class User {
     public void printAverageScore(){//输出平均成绩
         System.out.println("平均成绩为："+(math+chinese)/2);
     }
-    public User() {System.out.println("==无参构造器执行了==");
+    public void print(){//（二）、2、this关键字
+        //那个对象调用这个方法，this就拿到那个对象
+        System.out.println(this);
+    }
+    public void print(String name){//（二）、2、this关键字解决变量冲突问题
+        System.out.println(name+this.name);//this.name拿到的是对象的name,而不是局部变量name
+    }
+    public User() {System.out.println("==无参构造器执行了==");//（二）、1、构造器
     }
 
     public User(String name, Integer age, boolean gender, String email, String password, Integer math, Integer chinese) {
@@ -26,6 +33,7 @@ public class User {
         this.password = password;
         this.math = math;
         this.chinese = chinese;
+        System.out.println("==有参构造器执行了==");
     }
 
     @Override

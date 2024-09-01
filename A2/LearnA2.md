@@ -103,6 +103,15 @@ public class main() {
 ```
 ##### 2、this关键字
 
+1、this 关键字：是一个变量，可以用在方法中，调用当前的方法的对象地址。
+
+2、应用场景：解决变量名称冲突问题。（见有参构造器）。
+```java
+public void print(String name){//（二）、2、this关键字解决变量冲突问题
+    System.out.println(name+this.name);//this.name拿到的是对象变量(成员变量)name,而不是局部变量name
+}
+```
+
 ### 三、参考
 
 1. 学习主要链接来源于[[黑马程序员](https://www.bilibili.com/video/BV1gb42177hm?p=1&amp;vd_source=2140b8696bb75ad7bd33e1195bf24372)]

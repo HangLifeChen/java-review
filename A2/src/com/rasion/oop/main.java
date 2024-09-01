@@ -3,7 +3,11 @@ package com.rasion.oop;
 public class main {
     public static void main(String[] args) {
         User s1=insert();
-        print(s1);
+        System.out.println(s1);//（二）、1、构造器
+
+        User s2=new User();
+        s2.print();//（二）、2、this关键字，可以拿到对象的信息
+        System.out.println(s2);
     }
     //定义一个返回值为User对象的存储对象数据的方法
     public static User insert(){

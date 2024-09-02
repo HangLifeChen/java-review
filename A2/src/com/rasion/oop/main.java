@@ -2,7 +2,7 @@ package com.rasion.oop;
 
 public class main {
     public static void main(String[] args) {
-        User s1=insert();
+/*        User s1=insert();
         System.out.println(s1);//（二）、1、构造器
 
         User s2=new User();
@@ -16,13 +16,16 @@ public class main {
         us.printAll();
         us.printAverage();
 
-        StaticAbout sa2= new StaticAbout();
+        StaticAbout sa2= new StaticAbout();//（二）、5、static修饰成员变量
         StaticAbout sa1= new StaticAbout();
         StaticAbout.name="Rasion";
         sa2.age=20;
         sa1.age=20;
         System.out.println(StaticAbout.name+sa2.age+sa1.age+sa1.name+sa2.name);
         //System.out.println(StaticAbout.age);//报错，
+*/
+        //（二）、7、静态方法与工具类
+        System.out.println(StaticAbout.getCode(6));
     }
     //定义一个返回值为User对象的存储对象数据的方法
     public static User insert(){

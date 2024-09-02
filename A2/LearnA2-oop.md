@@ -1,8 +1,8 @@
-# JavaLearnA1
+# JavaLearnA2-oop
 
 ### 一、介绍
 
-A2简介：关于java特有的语法学习，加上一个综合实践
+A2简介：关于java面向对象以及基本语法的语法学习，加上一个综合实践
 
 ### 二、基本语法
 
@@ -169,6 +169,92 @@ public class main(){
     }
 }
 ```
+
+##### 6、static修饰方法
+
+（1）、static修饰静态方法：有static修饰的成员方法，属于类，最好用类名调用，少用对象名调用。
+
+（2）、实例方法：无static修饰的成员方法，属于对象，用对象名调用，不能用类名调用。
+
+    规范：如果一个方法只是为了做一个功能且不需要直接访问对象的数据，这个方法直接定义为静态方法。
+    如果这个方法是关于对象的行为，需要访问对象的数据，这个方法必须定义为实例方法
+
+（3）、比如在main方法中，我们直接调用其他方法，是用类名调用，只不过类名在同一类中可以忽略不写。（main方法是静态方法）
+
+##### 7、工具类与静态方法
+
+（1）、工具类：封装了多个静态方法，每个方法用来完成一个功能，给开发人员直接使用。
+
+（2）、区别：实例方法需要创建最想来调用，此时对象占用内存，而静态方法不需要，可以减少内存消耗；静态方法可以用类名调用，调用方便，能节省内存。
+```java
+public class StaticAbout {//工具类
+    //工具类没有创建对象的需求，建议讲工具类的构造器私有。
+    private StaticAbout() {
+    }
+    public static String getCode(int n) {//静态方法与工具类
+        String code = "";
+        for (int i = 0; i < n; i++) {
+            int type = (int) (Math.random() * 3);//0-9 1-26 2-26
+            switch (type) {
+                case 0:
+                    code += (int) (Math.random() * 10);
+                    break;
+                case 1:
+                    code += (char) (Math.random() * 26 + 'a');//得到小写字母的区间
+                    break;
+                case 2:
+                    code += (char) (Math.random() * 26 + 'A');
+            }
+        }
+        return code;
+    }
+}
+```
+##### 8、静态方法与实例方法访问注意事项
+
+（1）、静态方法中可直接访问静态成员，不可直接访问实例成员。
+
+（2）、实例方法中即可直接访问静态成员，也可直接访问实例成员。
+
+（3）、实例方法中可以出现this关键字，静态方法中不可出现this关键字。
+```java
+public class Attention{
+    public static int count=100;//静态变量
+    public static void print(){//静态方法
+        System.out.println("Hello World!");
+    }
+    public String name;//实例变量，属于对象
+    public void prints(){//实例方法，属于对象
+    }
+    public static void main(String[] args) {
+
+    }
+    //（1）、静态方法中可直接访问静态成员，不可直接访问实例成员。
+    public static void printTest1(){
+        System.out.println(count);
+        print();
+        //System.out.println(name);//报错
+        //prints();//报错
+        //System.out.println(this);//报错，this代表的只能是对象
+        System.out.println(Attention.count);
+    }
+    //（2）、实例方法中即可直接访问静态成员，也可直接访问实例成员。
+    public void printTest2(){
+        System.out.println(count);
+        print();
+        System.out.println(name);
+        prints();
+        System.out.println(this);//实例方法中，this代表的是当前对象
+    }
+}
+```
+
+#### （三）、综合实战
+
+需求：展示系统中的全部电影信息(每部电影展示：名称、价格)，允许用户根据电影编号查询出某个电影的详细信息。
+
+详细见A2.com.rasion.oop.demo的三个文件
+
 ### 三、参考
 
 1. 学习主要链接来源于[[黑马程序员](https://www.bilibili.com/video/BV1gb42177hm?p=1&amp;vd_source=2140b8696bb75ad7bd33e1195bf24372)]

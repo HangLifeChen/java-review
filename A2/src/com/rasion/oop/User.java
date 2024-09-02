@@ -9,19 +9,6 @@ public class User {
     private Integer math;
     private Integer chinese;
 
-    public void printAllScore(){//输出总成绩
-        System.out.println("总成绩为："+(math+chinese));
-    }
-    public void printAverageScore(){//输出平均成绩
-        System.out.println("平均成绩为："+(math+chinese)/2);
-    }
-    public void print(){//（二）、2、this关键字
-        //那个对象调用这个方法，this就拿到那个对象
-        System.out.println(this);
-    }
-    public void print(String name){//（二）、2、this关键字解决变量冲突问题
-        System.out.println(name+this.name);//this.name拿到的是对象的name,而不是局部变量name
-    }
     public User() {System.out.println("==无参构造器执行了==");//（二）、1、构造器
     }
 
@@ -34,6 +21,20 @@ public class User {
         this.math = math;
         this.chinese = chinese;
         System.out.println("==有参构造器执行了==");
+    }
+
+    public void printAllScore(){//输出总成绩
+        System.out.println("总成绩为："+(math+chinese));
+    }
+    public void printAverageScore(){//输出平均成绩
+        System.out.println("平均成绩为："+(math+chinese)/2);
+    }
+    public void print(){//（二）、2、this关键字
+        //那个对象调用这个方法，this就拿到那个对象
+        System.out.println(this);
+    }
+    public void print(String name){//（二）、2、this关键字解决变量冲突问题
+        System.out.println(name+this.name);//this.name拿到的是对象的name,而不是局部变量name
     }
 
     @Override
@@ -62,6 +63,9 @@ public class User {
     }
 
     public void setAge(Integer age) {
+//        if(age>0&&age<150){
+//            this.age = age;
+//        }else{System.out.println("年龄不合法");}//（二）、3、封装，合理隐藏，合理暴露，此处为校验，但一般不在成员调用方法中进行，要在其他地方调用。
         this.age = age;
     }
 

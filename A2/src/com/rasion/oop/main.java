@@ -8,6 +8,13 @@ public class main {
         User s2=new User();
         s2.print();//（二）、2、this关键字，可以拿到对象的信息
         System.out.println(s2);
+
+        JavaBean_User jb= new JavaBean_User("Rasion",20,true,"rasion@gmail.com","123456",90,100);
+        System.out.println(jb);//（二）、4、JavaBean实体类的调用
+
+        UserService us=new UserService(jb);//（二）、4、我们一般不直接调用实体类在总文件中进行操作，而是调用实体类的操作对象
+        us.printAll();
+        us.printAverage();
     }
     //定义一个返回值为User对象的存储对象数据的方法
     public static User insert(){

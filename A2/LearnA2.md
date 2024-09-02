@@ -12,7 +12,7 @@ A2简介：关于java特有的语法学习，加上一个综合实践
 
 1、**对象**：特殊的数据结构，一个实体，有属性和行为。也可以理解为一张表。
 
-2、**类（对象类）**：特殊的数据结构，有属性和行为。一张模板表。
+2、**类（对象类）**：特殊的数据结构，有属性和行为。类只在计算机中加载一次。
 ```java
 public class User {//定义一个对象类，并且定义了对象的属性和行为
     private String name;
@@ -138,8 +138,37 @@ public void print(String name){//（二）、2、this关键字解决变量冲突
 
 （3）、应用场景：实体类的对象只负责数据的封装，不涉及任何业务逻辑。而数据的业务处理交给其他类的对象来完成，以实现数据和业务处理相分离（解耦）。
 
-##### 5、static
+##### 5、static修饰成员变量
 
+（1）、static关键字：修饰成员变量、方法、类，修饰后，该成员变量、方法、类属于类，而不是对象。
+
+（2）、静态变量（类变量）：有static修饰，属于类，被类的全部对象共享，所有对象都可以访问。
+
+（3）、实例变量（对象的变量）：没有static修饰，属于每个对象，每个对象都有自己的变量，对象可以访问。
+
+（4）、应用场景：如果某一个数据只需要一份，并且希望能够被共享、访问、修改，则该数据被定义成静态变量。 （如用户类，记录了创建了多少个用户对象）
+```java
+public class User {
+    static String name;//静态变量（类变量）
+    int age;//实力变量（对象的变量）
+}
+public class main(){
+    public static void main(String[] args) {
+        User s1= new User();//s1对象
+        User s2= new User();//s2对象
+        //其中，s1和s2各自都有各自的age变量，但s1不能访问s2的age。
+        //但name是静态变量，所有对象都可以访问，存储在类中的。
+        //所以我们访问静态变量一般都直接用  类名.静态变量 如 User.name
+        User.name="Rasion";
+        s1.age=10;
+        s1.name="Rasion1";
+        s2.age=20;
+        s2.name="Rasion2";
+        System.out.println(User.name+s1.age+s1.name+s2.age+s2.name);
+        //Rasion210Rasion220Rasion2
+    }
+}
+```
 ### 三、参考
 
 1. 学习主要链接来源于[[黑马程序员](https://www.bilibili.com/video/BV1gb42177hm?p=1&amp;vd_source=2140b8696bb75ad7bd33e1195bf24372)]

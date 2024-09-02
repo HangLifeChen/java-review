@@ -15,6 +15,14 @@ public class main {
         UserService us=new UserService(jb);//（二）、4、我们一般不直接调用实体类在总文件中进行操作，而是调用实体类的操作对象
         us.printAll();
         us.printAverage();
+
+        StaticAbout sa2= new StaticAbout();
+        StaticAbout sa1= new StaticAbout();
+        StaticAbout.name="Rasion";
+        sa2.age=20;
+        sa1.age=20;
+        System.out.println(StaticAbout.name+sa2.age+sa1.age+sa1.name+sa2.name);
+        //System.out.println(StaticAbout.age);//报错，
     }
     //定义一个返回值为User对象的存储对象数据的方法
     public static User insert(){

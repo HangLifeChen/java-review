@@ -11,9 +11,13 @@ A2简介：关于java继承与多态的学习，加上一个综合实践。
 ```java
 public calss B extends A{}//其中A是父类，B是子类
 ```
-    只能继承父类的非私有成员（成员变量、成员方法）
-    继承后的创建：子类的对象是由子类、父类共同完成的，所以子类对象是完整的，父类对象是部分。
-    继承的好处：代码重用，减少代码量，提高效率。
+> [!CAUTION]
+>
+> 只能继承父类的非私有成员（成员变量、成员方法）
+>
+> 继承后的创建：子类的对象是由子类、父类共同完成的，所以子类对象是完整的，父类对象是部分。
+>
+> 继承的好处：代码重用，减少代码量，提高效率。
 
 #### 2、权限修饰符
 用来限制类中的成员能够被访问的范围。
@@ -118,12 +122,13 @@ class zilei extends fulei{
 ```
 #### 4、方法重写(声明不变，重新实现)
 子类重写父类的方法，子类对象调用父类方法，实际调用子类重写的方法。（**声明不变，重新实现**）
-
-    注意：子类重写时，访问权限必须大于或等于父类的该方法的权限（public>protected>default>private）
-
-        重写的方法，必须与重写前的方法具有相同的参数列表和返回值类型（返回值类型一样或更小）。
-
-        私有方法（不能被继承所以不能被重写）和静态方法（自己调用）不能被重写，否则报错。
+> [!CAUTION]
+>
+> 子类重写时，访问权限必须大于或等于父类的该方法的权限（public>protected>default>private）
+>
+>重写的方法，必须与重写前的方法具有相同的参数列表和返回值类型（返回值类型一样或更小）。
+> 
+>私有方法（不能被继承所以不能被重写）和静态方法（自己调用）不能被重写，否则报错。
 ```java
 public class TestOverride {
     public static void main(String[] args) {//二、4、方法重写
@@ -223,7 +228,62 @@ public class User{
 }
 ```
 ### 三、多态
+#### 1、多态前提：有继承/实现关系；存在父类引用子类对象；存在方法重写
 
+多态是在**继承/实现**的情况下的一种现象、表现为：对象多态、行为多态（对象的多样性，行为的多样性，但是没有成员变量的多态性）
+```java
+    people p1=new student();//对象多态
+    p1.run();//行为多态
+    people p2=new teacher();//对象多态
+    p2.run();//方法：编译看左边，运行看右边
+        
+    System.out.println(p2.name);//成员变量：编译看左边，运行也看左边
+```
+#### 2、多态的好处
+右边的对象是解耦合的，更便于扩展和维护。父类类型的变量作为参数可以接收一切子类变量(但是不能调用子类独有功能)
+```java
+public class TestPolymorphism {
+    public static void main(String[] args) {
+        people p1=new student();//多态调用不了子类的独有功能
+        people p2=new teacher();
+        show(p1);
+    }
+    public static void show(people p) {//父类类型作为参数，可以接收一切子类变量，不能为Student或者teacher
+        System.out.println("=====+++=====");
+        p.run();
+    }
+}
+```
+#### 3、多态下的类型转换（instanceof判断）
+强制类型转换：子类 对象名=(子类) 父类对象名;
+
+强制类型转换后能够调用子类的私有方法
+
+> [!CAUTION]
+>
+> 在运行时，如果发现对象的**正式类型与强制转换后的类型**不同，就会报类型异常（ClassCastException）的错误
+> 
+> 在强转前可以用instanceof关键字判断对象的真实类型，再进行强转
+
+```java
+public class TestPolymorphism {
+    public static void main(String[] args) {
+        people p1=new student();
+        student s=(student)p1;//强制类型转换
+//        teacher t=(teacher)p1;//转换错误，因为p1是student类型
+        //编译阶段有类型强转不会报错，运行阶段会报错
+    }
+    public static void show(people p) {
+        if(p instanceof teacher) {//判断类型，一般会在方法中写，来判断p是否为teacher类型
+            teacher t=(teacher)p;
+            ...//调用teacher的独有功能
+        }else if(p instanceof student) {
+            student s=(student)p;
+            ...
+        }
+    }
+}
+```
 ### 四、参考
 
 1. 学习主要链接来源于[[黑马程序员](https://www.bilibili.com/video/BV1gb42177hm?p=1&amp;vd_source=2140b8696bb75ad7bd33e1195bf24372)]

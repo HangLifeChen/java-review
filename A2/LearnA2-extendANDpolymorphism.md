@@ -284,7 +284,17 @@ public class TestPolymorphism {
     }
 }
 ```
+#### 4、实例
+
+    加油站支付模块： 加油站推出金卡与银卡
+    卡片信息有：车牌号码，车主姓名、电话号码、卡片余额
+    金卡办理时：存入金额必须>=5000元，优惠：8折，消费满200提供免费洗车服务卡卷
+    银卡办理时：存入金额必须>=2000元，优惠：9折
+    需求：加油站支付机的存款和消费程序
+
+    具体见com.rasion.extendANDpolymorphism.Demo包
+    包中没有实现办理业务
 ### 四、参考
 
-1. 学习主要链接来源于[[黑马程序员](https://www.bilibili.com/video/BV1gb42177hm?p=1&amp;vd_source=2140b8696bb75ad7bd33e1195bf24372)]
+1. 学习主要链接来源于[[黑马程序员](https://www.bilibili.com/video/BV1gb42177hm?p=60&vd_source=2140b8696bb75ad7bd33e1195bf24372)]
 2.  其他可能用得上的链接

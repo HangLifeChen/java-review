@@ -146,6 +146,7 @@ public class AnonymityInnerClass {
                 System.out.println("cat run");
             }
         };//匿名内部类，同cat类，即是一个子类又是一个子类对象
+//        Animal cat=() -> System.out.println("cat run");//Lambda简化
         cat.run();
         print(cat);
     }
@@ -166,8 +167,40 @@ interface Animal{
 //}
 ```
 #### （三）、函数式编程
-Java中的函数(即Lambda表达式)，Java8开始引入了Lambda表达式，替代某些匿名内部类对象，可以简化代码，可读性更强。
+##### 1、Java中的函数(即Lambda表达式)
+Java8开始引入了Lambda表达式，**替代函数式接口的匿名内部类**，可以简化代码，可读性更强。
 > Lambda表达式的格式：**(参数列表)->{匿名内部类被重写的方法体代码}**
+> 
+> 函数式接口：有且仅有一个抽象方法的接口，可以省略接口名，直接使用方法名
+> 
+> **Lambda简化规则**：
+> 
+>       a、参数类型可以省略不写
+>       b、如果只有一个参数，参数类型省略的同时“( )”可以省略，但多个参数必须写上
+>       c、如果Lambda只有一行代码，大括号可以省略，同时必须省略分号，如果这行代码式return语句，则必须去掉return。
+```java
+public class main {
+    public static void main(String[] args) {
+        MyInterface myInterface1 = () -> {
+            System.out.println("lambda表达式简化匿名内部类");
+        };
+//        Arrays.sort(students, (o1, o2)-> o1.getAge()-o2.getAge());//简化后的代码
+        myInterface1.print();
+    }
+}
+//函数式接口：只有一个抽象方法的接口
+@FunctionalInterface//标记函数式接口，编译器会检查，如果接口中有多个抽象方法，编译器会报错
+interface MyInterface{
+//抽象方法
+    public abstract void print();
+}
+```
+##### 2、方法引用：
+###### 静态方法引用
+> 格式：**类名::静态方法名**
+> 
+> 使用场景：如果某个Lambda表达式里仅调用了一个静态方法，并且"->"前后的参数形式一致，则可以使用静态方法引用。（见com.rasion.oopExpert2.Lambda.StaticMethodReference和Student.compareAge）
+> 
 #### （四）、常用API
 
 #### （五）、GUI编程

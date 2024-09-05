@@ -201,6 +201,25 @@ interface MyInterface{
 > 
 > 使用场景：如果某个Lambda表达式里仅调用了一个静态方法，并且"->"前后的参数形式一致，则可以使用静态方法引用。（见com.rasion.oopExpert2.Lambda.StaticMethodReference和Student.compareAge）
 > 
+>       Arrays.sort(students, (o1, o2)-> o1.getAge()-o2.getAge());//原始代码
+>       Arrays.sort(students, Student::compareAge);//静态方法引用简化后的代码
+>       public static int compareAge(Student s1,Student s2){//Student类中的静态方法
+>            return s1.getAge()-s2.getAge();}
+```java
+//public static void sort(T[] a, Comparator<T> c)——————Arrays.sort原型
+//参数一：需要排序的数组   参数二：需要给sort声明一个Comparator比较器对象（指定排序的规则）
+Arrays.sort(students,new Comparator<Student>() {//Comparator为由官方定义的函数式接口
+    @Override
+    public int compare(Student o1, Student o2) {
+        //如果左边对象大于右边对象，返回正整数，否则返回负整数，等于时为0
+        return o1.getAge()-o2.getAge();//或写成这样，按照年龄升序
+    }
+});
+```
+###### 实例方法引用
+> 格式：**对象名::实例方法名**
+> 
+> 使用场景：如果某个Lambda表达式里只通过对象名称调用一个实例方法，并且"->"前后的参数形式一致，则可以使用实例方法引用。
 #### （四）、常用API
 
 #### （五）、GUI编程

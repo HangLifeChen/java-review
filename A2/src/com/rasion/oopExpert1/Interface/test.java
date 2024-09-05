@@ -1,4 +1,4 @@
-package com.rasion.oopExpert.Interface;
+package com.rasion.oopExpert1.Interface;
 
 public class test {
     public static void main(String[] args) {

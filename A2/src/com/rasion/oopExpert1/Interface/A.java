@@ -1,4 +1,4 @@
-package com.rasion.oopExpert.Interface;
+package com.rasion.oopExpert1.Interface;
 
 public interface A {
     //JDK8之前，接口只能定义常量和抽象方法，不能定义具体方法。

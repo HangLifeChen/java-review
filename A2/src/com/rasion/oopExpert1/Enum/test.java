@@ -1,4 +1,4 @@
-package com.rasion.oopExpert.Enum;
+package com.rasion.oopExpert1.Enum;
 
 public class test {
     public static void main(String[] args) {

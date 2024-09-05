@@ -1,4 +1,4 @@
-package com.rasion.oopExpert.Singleinstance;
+package com.rasion.oopExpert1.Singleinstance;
 
 public class Test {
     public static void main(String[] args){

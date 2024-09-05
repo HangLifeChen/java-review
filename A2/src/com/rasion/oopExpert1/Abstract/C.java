@@ -1,4 +1,4 @@
-package com.rasion.oopExpert.Abstract;
+package com.rasion.oopExpert1.Abstract;
 
 public class C extends A{
     @Override

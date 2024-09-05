@@ -1,4 +1,4 @@
-package com.rasion.oopExpert.Interface;
+package com.rasion.oopExpert1.Interface;
 
 public class B implements A{
     @Override

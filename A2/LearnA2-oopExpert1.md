@@ -1,4 +1,4 @@
-# JavaLearnA2-oopExpert
+# JavaLearnA2-oopExpert1
 
 ### 一、介绍
 
@@ -14,7 +14,7 @@
 ·修饰方法：代表该方法不能被重写，为最终方法。
 
 ·修饰变量（局部变量、成员变量（静态、实例））：代表该变量不能被修改。（一般是**修饰静态变量**）
-> [!CAUTION]（见oopExpert.Final.finaltest）
+> [!CAUTION]（见oopExpert1.Final.finaltest）
 >
 > final修饰基本类型（int，double，boolean，char...）的变量，变量存储的数据不能被改变。
 > 

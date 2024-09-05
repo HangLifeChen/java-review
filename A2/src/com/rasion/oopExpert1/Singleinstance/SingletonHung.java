@@ -1,4 +1,4 @@
-package com.rasion.oopExpert.Singleinstance;
+package com.rasion.oopExpert1.Singleinstance;
 
 public class SingletonHung {//饿汉式单例模式：拿对象的时候对象早已生成，故不用加锁，但无法实现延迟加载
     private SingletonHung(){}//1、私有化构造函数，防止外部实例化

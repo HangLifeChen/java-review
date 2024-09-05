@@ -1,4 +1,4 @@
-package com.rasion.oopExpert.Final;
+package com.rasion.oopExpert1.Final;
 
 public class finaltest {
     public static final String NAME = "rasion";//3、final修饰静态变量，作为常量使用，不能被修改，常量名称大写，多个单词用下划线隔开

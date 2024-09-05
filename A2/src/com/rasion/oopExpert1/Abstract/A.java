@@ -1,4 +1,4 @@
-package com.rasion.oopExpert.Abstract;
+package com.rasion.oopExpert1.Abstract;
 
 public abstract class A {
 //    //2、抽象方法，抽象类中可以有抽象方法，抽象方法没有方法体，只有方法声明，子类必须重写抽象方法

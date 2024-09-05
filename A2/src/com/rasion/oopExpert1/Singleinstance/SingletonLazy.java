@@ -1,4 +1,4 @@
-package com.rasion.oopExpert.Singleinstance;
+package com.rasion.oopExpert1.Singleinstance;
 
 public class SingletonLazy {//懒汉式单例类：拿对象的时候才创建，但无法实现延迟加载
     private SingletonLazy(){}//1、私有化构造器

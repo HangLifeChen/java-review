@@ -1,4 +1,4 @@
-# JavaLearnA2-oopExpert1
+# JavaLearnA2-oopExpert2
 
 ### 一、介绍
 
@@ -131,10 +131,10 @@ public class StaticInnerClass {
 格式：**new 类名或接口（参数值...）{ 重写方法 }**
 
 >特点：匿名内部类本质是个子类，并且会立即创建出一个子类对象
-> 
-> **作用：更方便的创建一个子类对象**
-> 
-> 匿名内部类应用场景：见com.rasion.oopExpert2.InnerClass.Button(开发中不是主动写匿名内部类，而是**调用别人的代码时需要我们写一个匿名内部类**)
+>
+>**作用：更方便的创建一个子类对象**
+>
+>匿名内部类应用场景：见com.rasion.oopExpert2.InnerClass.Button(开发中不是主动写匿名内部类，而是**调用别人的代码时需要我们写一个匿名内部类**)
 ```java
 public class AnonymityInnerClass {
     public static void main(String[] args) {
@@ -173,15 +173,17 @@ interface Animal{
 #### （三）、函数式编程
 ##### 1、Java中的函数(即Lambda表达式)
 Java8开始引入了Lambda表达式，**替代函数式接口的匿名内部类**，可以简化代码，可读性更强。
-> Lambda表达式的格式：**(形式参数列表)->{匿名内部类被重写的方法体代码}**
-> 
+
+Lambda表达式的格式：**(形式参数列表)->{匿名内部类被重写的方法体代码}**
+
 > 函数式接口：有且仅有一个抽象方法的接口，可以省略接口名，直接使用方法名
 > 
 > **Lambda简化规则**：
 > 
->       a、参数类型可以省略不写
->       b、如果只有一个参数，参数类型省略的同时“( )”可以省略，但多个参数必须写上
+>    a、参数类型可以省略不写
+>    b、如果只有一个参数，参数类型省略的同时“( )”可以省略，但多个参数必须写上
 >       c、如果Lambda只有一行代码，大括号可以省略，同时必须省略分号，如果这行代码式return语句，则必须去掉return。
+
 ```java
 public class main {
     public static void main(String[] args) {
@@ -302,8 +304,58 @@ class Student {
 }
 ```
 #### （四）、常用API
-##### 1、String
-快速创建字符串：String s=new String("rasion");
+##### 1、API-String
+>[Attention]
+>
+>只要以 **双引号** 方式创建字符串对象，会存储到**字符串常量池**中，且相同字符串只会储存一份。
+>
+>通过 **new** 关键字创建字符串对象，每new一次，都会产生一个**新的对象放在堆内存**中。
+
+| 方法名                                                       | 说明                                                     |
+| :----------------------------------------------------------- | :------------------------------------------------------- |
+| public int length()                                          | 获取字符串长度返回（字符个数）                           |
+| public char cahrAt(int index)                                | 获取某个索引位置处的字符返回                             |
+| public char[ ] toCharArray()                                 | 讲当前字符串转换成字符数组返回                           |
+| public boolean equals(Object anObject)                       | 判断当前字符串与另一个字符串的内容是否一样，一样返回true |
+| public boolean equalsIgnoreCase(String anotherString)        | 判断当前字符串与另一个字符串的内容是否一样（忽略大小写） |
+| public String substring(int beginIndex,int endIndex)         | 根据开始和结束索引进行截取，得到新的字符串（包前不包后） |
+| public String substring(int beginIndex)                      | 从传入的索引处截取，截取到末尾，得到新的字符串返回       |
+| public String replace(CharSequence target,CharSequence replacement) | 使用新值，讲字符串中的旧值替换，得到新的字符串           |
+| public boolean containt(CharSequence s)                      | 判断字符串中是否包含了某个字符串                         |
+| public boolean startsWith(String prefix)                     | 判断字符串是否以某个字符串内容为开头，是则返回true       |
+| public String[ ] split(String regex)                         | 把字符串按照某个字符串内容分割，返回字符串数组回来       |
+
+```java
+String s1="rasion";//快速创建字符串
+System.out.println(s1);//输出rasion而不是地址
+
+String s2=new String();//通过构造器创建字符串
+String s3=new String("rasion");
+
+char[] chs={'r','a','s','i','o','n'};
+String s4=new String(chs);//把字符数组转换成字符串
+
+System.out.println(s1=="rasion");//字符串在常量池且只有一份，故为true
+System.out.println(s3==s4);//new出字符串对象，故为false
+
+//随机验证码在之前的测试中已经做过了，此处不再赘述。
+```
+##### 2、API-ArrayList
+ArrayList代表集合，用来装数据的，类似数组，但是容量大小可变，功能丰富，开发中用的更多。
+(1)、创建ArrayList对象：ArrayList<String> list=new ArrayList<>();
+
+(2)、
+
+| 常用方法                                          | 说明                          |
+|:----------------------------------------------|:----------------------------|
+| public ArrayList()                            | 创建一个空的集合对象                  |
+| public boolean add(E e)                       | 在集合的末尾添加一个指定的元素，并返回true     |
+| public void add(int index,E element)          | 在集合的指定索引位置添加一个指定的元素，并返回true |                            |
+| public E get(int index)                       | 返回指定索引位置的元素                 |
+| public int size()                             | 返回集合中元素的个数                  |
+| public E remove(int index)                    | 删除指定索引位置的元素，并返回被删除的元素       |
+| public boolean remove(Object o)               | 删除指定元素，并返回删除是否成功            |
+| public E set(int index,E element)             | 修改指定索引位置的元素，并返回被修改的元素       |
 #### （五）、GUI编程
 
 ### 三、参考

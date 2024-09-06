@@ -302,7 +302,8 @@ class Student {
 }
 ```
 #### （四）、常用API
-
+##### 1、String
+快速创建字符串：String s=new String("rasion");
 #### （五）、GUI编程
 
 ### 三、参考

@@ -36,3 +36,29 @@ interface MyInterface{
     //抽象方法
     public abstract void print();
 }
+
+
+//构造器引用
+//
+//import com.rasion.oopExpert2.Lambda.Student;
+//public class main {
+//    public static void main(String[] args) {
+//        GetStudent gs = new GetStudent() {
+//            @Override
+//            public Student getName(String name, int age, String school, char sex) {
+//                return new Student(name,age,school,sex);
+//            }
+//        };//匿名内部类方式
+//        GetStudent gs2= (name,age,school,sex)->new Student(name,age,school,sex);//lambda表达式方式
+//
+//        GetStudent gs3= Student::new;//构造器引用
+//
+//        Student s1= gs.getName("rasion",23,"ctgu",'男');
+//        System.out.println(s1);
+//    }
+//}
+//
+//@FunctionalInterface
+//interface GetStudent {
+//    Student getName(String name, int age, String school, char sex);
+//}

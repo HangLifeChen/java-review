@@ -10,6 +10,12 @@ public class AnonymityInnerClass {
                 System.out.println("cat run");
             }
         };//匿名内部类，同cat类，即是一个子类又是一个子类对象
+        print(new Animal() {
+            @Override
+            public void run() {
+                System.out.println("inner cat run");
+            }
+        });
         print(cat);
     }
     public static void print(Animal animal){

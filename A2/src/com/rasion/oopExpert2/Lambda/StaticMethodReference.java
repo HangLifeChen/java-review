@@ -16,6 +16,7 @@ public class StaticMethodReference {
         };
         Arrays.sort(students, (o1, o2)-> o1.getAge()-o2.getAge());//原始代码
         Arrays.sort(students,(o1, o2)-> compareAge(o1,o2) );//简化后的代码
+
         //如果某个Lambda表达式里仅调用了一个静态方法，并且"->"前后的参数形式一致，则可以使用静态方法引用
         Arrays.sort(students, Student::compareAge);//静态方法引用简化后的代码
         for (Student student:students){//按照年龄排序完之后的数组排序

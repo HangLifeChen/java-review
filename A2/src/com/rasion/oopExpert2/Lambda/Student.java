@@ -6,8 +6,11 @@ public class Student {
     private String school;
     private char sex;
 
-    public static int compareAge(Student s1,Student s2){
+    public static int compareAge(Student s1,Student s2){//Student唯一静态方法
         return s1.getAge()-s2.getAge();
+    }
+    public int compareAgeInstant(Student s1,Student s2){
+        return Integer.compare(s1.getAge(),s2.getAge());
     }
 
     public Student() {

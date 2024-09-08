@@ -128,7 +128,6 @@ public class MainFrame extends JFrame {
         int blankRow = img.length - 1; // 空白格初始在最后一行
         int blankCol = img.length - 1; // 空白格初始在最后一列
         int inversions = countInversions();
-
         while (true) {
             // 随机选择一个方向
             int direction = random.nextInt(3);
@@ -139,7 +138,6 @@ public class MainFrame extends JFrame {
                 swap(blankRow, blankCol, newRow, newCol);
                 int newInversions = countInversions();
                 boolean isSolvable = (blankRow == img.length - 1) ? (newInversions % 2 == 0) : (newInversions % 2 != 0);
-
                 if (isSolvable) {
                     blankRow = newRow;
                     blankCol = newCol;

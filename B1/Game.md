@@ -89,3 +89,5 @@ private int countInversions() {
 
 ### 二、学习链接
 [黑马程序员Java](https://www.bilibili.com/video/BV1gb42177hm?p=106&vd_source=2140b8696bb75ad7bd33e1195bf24372)
+
+[Java学习B1模块仓库地址](https://gitee.com/RasionLS/java-learn/tree/master/B1)

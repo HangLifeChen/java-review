@@ -456,5 +456,17 @@ public class RasionLoginFrame extends JFrame {
 ```
 #### 6、弹出添加员工信息界面
 ```java
+addItem.addActionListener(e1 -> {
+    // 弹出对话框获取新的信息
+    String newName = JOptionPane.showInputDialog(this, "请输入新姓名:");
+    String newSex = JOptionPane.showInputDialog(this, "请输入新性别:");
+    String newPosition = JOptionPane.showInputDialog(this, "请输入新职位:");
+    
+    if (newName != null && newPosition != null) {
+        // 添加新员工到表格
+        tableModel.addRow(new Object[]{employees.size()+1, newName,newSex,null,null,null,newPosition});
+    }
+});
+```
 ### 三、学习链接
 【[黑马程序员](https://www.bilibili.com/video/BV1gb42177hm?p=100&spm_id_from=pageDriver&vd_source=2140b8696bb75ad7bd33e1195bf24372)】

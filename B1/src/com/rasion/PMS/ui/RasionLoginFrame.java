@@ -14,7 +14,7 @@ public class RasionLoginFrame extends JFrame {
 //定义一个静态集合存储用户信息
     private static ArrayList<User> users = new ArrayList<>();
 //如果登录用集合的三个用户，获取集合的username并返回username
-    public static Integer temp;
+    public static Integer temp=null;
     public static String getUsername() {
         return users.get(temp).getUsername();
     }
@@ -22,6 +22,7 @@ public class RasionLoginFrame extends JFrame {
         users.add(new User("admin", "123456", "admin"));
         users.add(new User("rasion", "123456", "rasion"));
         users.add(new User("jp", "rasion", "jp"));
+        users.add(new User("1", "1", "rasion1"));
     }
 
     public RasionLoginFrame(){

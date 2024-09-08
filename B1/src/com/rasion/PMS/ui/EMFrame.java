@@ -47,7 +47,7 @@ public class EMFrame extends JFrame {
         centerPanel.setLayout(new BorderLayout());
 
         // 创建表格模型
-        tableModel = new DefaultTableModel(new Object[]{"ID", "姓名","性别","年龄","电话", "职位","入职日期","薪水","部门"}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"ID", "姓名","性别","年龄","电话","入职日期", "职位","薪水","部门"}, 0);
         employeeTable = new JTable(tableModel);
         employeeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -85,7 +85,7 @@ public class EMFrame extends JFrame {
 
     private void initializeEmployees() {
         for (int i = 1; i <= 20; i++) {
-            employees.add(new Employee(i,"员工"+i,"男",i>5?i*2:i*10,"199"+i+"09876"+i,"2024-5-1",i<3?"经理":"员工",i*i>20?i*100:i*i,"i"+i));
+            employees.add(new Employee(i,"员工"+i,"男",i>5?i*2:i*10,"199"+i+"09876"+i,"2024-5-1",i<3?"经理":"员工",i*i>20?i*100:i*i*10000,i<9?"部门1":"部门2"));
         }
     }
 
@@ -105,12 +105,25 @@ public class EMFrame extends JFrame {
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem editItem = new JMenuItem("修改");
         JMenuItem deleteItem = new JMenuItem("删除");
+        JMenuItem addItem = new JMenuItem("添加");
 
         editItem.addActionListener(e1 -> editEmployee(row));
         deleteItem.addActionListener(e1 -> deleteEmployee(row));
+        addItem.addActionListener(e1 -> {
+            // 弹出对话框获取新的信息
+            String newName = JOptionPane.showInputDialog(this, "请输入新姓名:");
+            String newSex = JOptionPane.showInputDialog(this, "请输入新性别:");
+            String newPosition = JOptionPane.showInputDialog(this, "请输入新职位:");
+
+            if (newName != null && newPosition != null) {
+                // 添加新员工到表格
+                tableModel.addRow(new Object[]{employees.size()+1, newName,newSex,null,null,null,newPosition});
+            }
+        });
 
         popupMenu.add(editItem);
         popupMenu.add(deleteItem);
+        popupMenu.add(addItem);
 
         popupMenu.show(employeeTable, e.getX(), e.getY());
     }
@@ -118,15 +131,18 @@ public class EMFrame extends JFrame {
     private void editEmployee(int row) {
         int id = (int) tableModel.getValueAt(row, 0);
         String name = (String) tableModel.getValueAt(row, 1);
-        String position = (String) tableModel.getValueAt(row, 2);
+        String sex = (String) tableModel.getValueAt(row, 2);
+        String position = (String) tableModel.getValueAt(row, 8);
 
         // 弹出对话框获取新的信息
-        String newName = JOptionPane.showInputDialog(this, "请输入新姓名:", name);
-        String newPosition = JOptionPane.showInputDialog(this, "请输入新职位:", position);
+        String newName = JOptionPane.showInputDialog(this, "请修改姓名:", name);
+        String newSex = JOptionPane.showInputDialog(this, "请修改性别:", sex);
+        String newPosition = JOptionPane.showInputDialog(this, "请修改职位:", position);
 
         if (newName != null && newPosition != null) {
             tableModel.setValueAt(newName, row, 1);
-            tableModel.setValueAt(newPosition, row, 2);
+            tableModel.setValueAt(newSex, row,2 );
+            tableModel.setValueAt(newPosition, row,8 );
         }
     }
 

@@ -13,9 +13,16 @@ public class MainFrame extends JFrame {
             {9,10,11,12},
             {13,14,15,0}
     };
+    private int[][] win = new int[][]{//获胜状态
+            {1,2,3,4},
+            {5,6,7,8},
+            {9,10,11,12},
+            {13,14,15,0}
+    };
     //定义两个整数变量的位置
     private int row;
     private int col;
+    private int count=0;
     public MainFrame(){
         initFrame();
         //打乱图片顺序
@@ -63,6 +70,7 @@ public class MainFrame extends JFrame {
                     img[row+1][col]=temp;
                     //更新当前空白色块位置
                     row++;
+                    count++;
                 }
                 break;
             case DOWN://向下移动
@@ -73,6 +81,7 @@ public class MainFrame extends JFrame {
                     img[row-1][col]=temp;
                     //更新当前空白色块位置
                     row--;
+                    count++;
                 }
                 break;
             case LEFT://向左移动
@@ -83,6 +92,7 @@ public class MainFrame extends JFrame {
                     img[row][col+1]=temp;
                     //更新当前空白色块位置
                     col++;
+                    count++;
                 }
                 break;
             case RIGHT://向右移动
@@ -93,6 +103,7 @@ public class MainFrame extends JFrame {
                     img[row][col-1]=temp;
                     //更新当前空白色块位置
                     col--;
+                    count++;
                 }
                 break;
         }
@@ -107,7 +118,7 @@ public class MainFrame extends JFrame {
                 img[i][j]=img[row][col];
                 img[row][col]=temp;
             }
-        }
+        }//简单粗暴的打乱数组
         //找到空白色块位置
         OUT:
         for(int i=0;i<img.length;i++){
@@ -126,9 +137,36 @@ public class MainFrame extends JFrame {
         JMenuItem exit=new JMenuItem("退出");
         jMenu.add(exit);
         exit.addActionListener(e -> dispose());
+        JMenuItem about=new JMenuItem("作弊获胜");
+        jMenu.add(about);
+        about.addActionListener(e -> {
+            for(int i=0;i<img.length;i++)
+                for(int j=0;j<img[i].length;j++)
+                    img[i][j]=win[i][j];
+            initImage();
+            if(affirm()) {
+                count=0;
+                initRandom();
+                initImage();
+            }
+            OUT:
+            for(int i=0;i<img.length;i++){
+                for(int j=0;j<img[i].length;j++){
+                    if(img[i][j]==0){
+                        row=i;
+                        col=j;
+                        break OUT;//退出整个循环
+                    }
+                }
+            }
+        });
         JMenuItem restart=new JMenuItem("重新开始");
         jMenu.add(restart);
-        restart.addActionListener(e -> System.out.println("重新开始还未开发"));
+        restart.addActionListener(e -> {
+            initRandom();
+            initImage();
+            count=0;
+        });
         jMenuBar.add(jMenu);//添加菜单条
         this.setJMenuBar(jMenuBar);//添加菜单
     }
@@ -145,6 +183,15 @@ public class MainFrame extends JFrame {
     private void initImage(){
         //先清空窗口上的全部图层
         this.getContentPane().removeAll();
+
+        //每次刷新时展示步数
+        JLabel jbu = new JLabel("步数："+count);
+        jbu.setBounds(0,0,100,30);
+        //文字颜色为红色
+        jbu.setForeground(Color.RED);
+        jbu.setFont(new Font("楷体",Font.BOLD,20));
+        this.add(jbu);
+
         //展示一个行列矩阵的图片色块依次铺满的窗口4*4
         for(int i=0;i<img.length;i++){
             for(int j=0;j<img[i].length;j++){
@@ -158,6 +205,23 @@ public class MainFrame extends JFrame {
         JLabel bg=new JLabel(new ImageIcon("B1/src/img/Background.jpg"));
         bg.setBounds(0,0,580,600);
         this.add(bg);
+
+        //判断是否胜利
+        isWin();
+
         this.repaint();//重绘窗口
+    }
+    private void isWin(){
+        for(int i=0;i<img.length;i++){
+            for(int j=0;j<img[i].length;j++){
+                if(img[i][j]!=win[i][j]){
+                    return;
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(this,"恭喜你，你赢了！");
+    }
+    private boolean affirm(){
+        return JOptionPane.showConfirmDialog(this,"是否要重新开始？")==0;
     }
 }

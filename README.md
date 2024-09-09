@@ -6,19 +6,21 @@
 #### 二、Java学习之路
 介绍：Java视频共有199集，我决定分为Java基础为模块A1，Java基础中的区别于其他语言的模块为A2，项目实战为模块B1/B2，Java加强为模块A3，Java高级技术为模块A4，Java基础结课考试测试为模块C1。
 
->A1模块：内有Java与其他语言通用的语法结构，包括运算符、数据类型、数组、字符串、方法等。
+>[A1模块](https://gitee.com/RasionLS/java-learn/tree/master/A1)：内有Java与其他语言通用的语法结构，包括运算符、数据类型、数组、字符串、方法等。√
 
->A2模块：面向对象的基础知识；继承、多态；面向对象的高级知识。
+>[A2模块](https://gitee.com/RasionLS/java-learn/tree/master/A2)：面向对象的基础知识；继承、多态；面向对象的高级知识。√
 
->A3模块：Java异常、泛型、集合框架、Stream流、方法传递、字符集、IO流。
+>[A3模块](https://gitee.com/RasionLS/java-learn/tree/master/A3)：Java异常、泛型、集合框架、Stream流、方法传递、字符集、IO流。
 
 >A4模块：多线程、网络编程、反射、注解、代理。
 
->B1模块：人事系统；游戏开发。
+>[B1模块](https://gitee.com/RasionLS/java-learn/tree/master/B1)：人事系统；游戏开发。√
 
 >B2模块：即时通讯。
 
 >C1模块：Java测试
+
+总结部分写在[Summary.md](https://gitee.com/RasionLS/java-learn/blob/master/Summary.md)中。
 
 #### 三、学习计划
 

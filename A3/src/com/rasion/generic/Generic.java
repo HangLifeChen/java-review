@@ -13,16 +13,19 @@ public class Generic {
         list.add('a');
         for(int i=0;i<list.size();i++) {
             Object obj=list.get(i);
-            String str=(String)obj;
+//            String str=(String)obj;
+            String str=obj.toString();
             System.out.println(str);
         }
-        ArrayList<String> list1=new ArrayList<String>();//代表数组只能添加String类型
+
+        //三、（一）、泛型集合类似数组
+        ArrayList<String> list1=new ArrayList<String>();//代表集合只能添加String类型
         list1.add("hello");
 //        list1.add(123);//添加类型错误，编译器报错
-    }
-    public static <T> void print(T[] arr){
-        for(T i : arr){
-            System.out.println(i);
-        }
+
+        //三、（二）、泛型类
+        MyArrayList<String> myList=new MyArrayList<String>();
+        System.out.println(myList.add("hello"));
+//        System.out.println(myList.add(1)));//报错
     }
 }

@@ -162,11 +162,50 @@ public class ExceptionDeal {//最外层获取异常后，尝试重新修复。
 
 2、作用：提供了在编译阶段约束所能操作的数据类型，并自动进行检查的能力，可以避免强制类型转换，及其有可能出现的异常。
 
-3、泛型本质：把具体的数据类型作为参数传给类型变量
+3、泛型本质：把具体的数据类型作为参数传给类型变量，其中我发现集合`ArraryList<Object>`相当于`Object类型`的数组
 #### (二)、泛型类
-`修饰符 class 类名<类型变量1、类型变量2...>{   }`
+基本语法：`修饰符 class 类名<类型变量1、类型变量2...>{   }`
 
-类型变量用大写字母，如：T、E、K、V等。
+>注意：类型变量用大写字母，如：`T`、`E`、`K`、`V`等。
+>
+> 可以控制类接收的类型变量，由于支持多个类型变量，故需注意类型变量的顺序，如：`<T,E>`、`<E,T>`之类的。
+#### (三)、泛型接口
+基本语法：`修饰符 interface 接口名<类型变量1、类型变量2...>{   }`
+```java
+/*====以下代码见com.rasion.generic.InterfaceGeneric包====*/
+public interface Data<E> {//既可以接User又可以接Customer
+    void add(E e);
+    void delete(E e);
+    E get(int index);
+}
+public class User implements Data<User>{//Customer类也实现了接口，只是泛型类型为Customer
+    @Override
+    public void add(User e) { }//重构接口方法
+    @Override
+    public void delete(User e) {}
+    @Override
+    public User get(int index) {return null;}
+    @Override
+    public void update(User e) {}
+}
+public class Generic {
+    public static void main(String[] args) {//对象实现区域
+        User user = new User();
+        user.add(new User());
+        Customer customer = new Customer();
+        customer.add(new Customer());
+
+        Data<User> data1 = new User();
+        data1.add(new User());
+        data.get(0);
+
+        Data<Customer> data2 = new Customer();
+        data2.add(new Customer());
+    }
+}
+```
+#### (四)、泛型方法、通配符、上下限
+1、泛型方法：定义一个方法，在方法定义中添加类型变量，然后在方法中使用类型变量。
 ### 四、集合框架
 
 ### 五、Stream流
@@ -178,6 +217,6 @@ public class ExceptionDeal {//最外层获取异常后，尝试重新修复。
 ### 八、IO流
 
 ### 九、学习链接
-1、[黑马程序员Java课程](https://www.bilibili.com/video/BV1gb42177hm?p=114&spm_id_from=pageDriver&vd_source=2140b8696bb75ad7bd33e1195bf24372)
-
-2、[A3部分代码仓库](https://gitee.com/RasionLS/java-learn/tree/master/A3)
+1. [黑马程序员Java课程](https://www.bilibili.com/video/BV1gb42177hm?p=114&spm_id_from=pageDriver&vd_source=2140b8696bb75ad7bd33e1195bf24372)
+2. [A3部分代码仓库](https://gitee.com/RasionLS/java-learn/tree/master/A3)
+3. [泛型：继承和通配符](https://blog.csdn.net/yubin1285570923/article/details/108135595)

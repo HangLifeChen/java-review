@@ -163,13 +163,15 @@ public class ExceptionDeal {//最外层获取异常后，尝试重新修复。
 2、作用：提供了在编译阶段约束所能操作的数据类型，并自动进行检查的能力，可以避免强制类型转换，及其有可能出现的异常。
 
 3、泛型本质：把具体的数据类型作为参数传给类型变量，其中我发现集合`ArraryList<Object>`相当于`Object类型`的数组
-#### (二)、泛型类
+#### (二)、**泛型类**
 基本语法：`修饰符 class 类名<类型变量1、类型变量2...>{   }`
+
+应用场景：在工具类中，经常会有一些方法需要处理不同类型的对象，如集合操作、数据转换等，这时可以使用泛型方法来增强工具类的通用性。
 
 >注意：类型变量用大写字母，如：`T`、`E`、`K`、`V`等。
 >
 > 可以控制类接收的类型变量，由于支持多个类型变量，故需注意类型变量的顺序，如：`<T,E>`、`<E,T>`之类的。
-#### (三)、泛型接口
+#### (三)、**泛型接口**
 基本语法：`修饰符 interface 接口名<类型变量1、类型变量2...>{   }`
 ```java
 /*====以下代码见com.rasion.generic.InterfaceGeneric包====*/
@@ -178,7 +180,7 @@ public interface Data<E> {//既可以接User又可以接Customer
     void delete(E e);
     E get(int index);
 }
-public class User implements Data<User>{//Customer类也实现了接口，只是泛型类型为Customer
+public class User implements Data<User>{//Customer类也是这样的实现，类型变量为Customer
     @Override
     public void add(User e) { }//重构接口方法
     @Override
@@ -195,7 +197,7 @@ public class Generic {
         Customer customer = new Customer();
         customer.add(new Customer());
 
-        Data<User> data1 = new User();
+        Datff a<User> data1 = new User();
         data1.add(new User());
         data.get(0);
 
@@ -204,8 +206,108 @@ public class Generic {
     }
 }
 ```
-#### (四)、泛型方法、通配符、上下限
-1、泛型方法：定义一个方法，在方法定义中添加类型变量，然后在方法中使用类型变量。
+#### (四)、**泛型方法**、通配符、上下限
+##### 1、泛型方法
+定义一个方法，在方法定义中添加类型变量，然后在方法中使用类型变量。
+
+**泛型方法作用**：泛型方法可以避免强制类型转换，在编译时就能够报错，同时能够确保方法接收参数的多样性，提升方法的复用性。
+```java
+public class GenericFunction {
+    public static void main(String[] args) {
+        //需求：打印任意数组的内容
+        Integer[] arr = {1,2,3,4,5};
+        print(arr);
+        Integer arr2=get(arr, 2);
+        System.out.println(arr2);
+    }
+    public static <T> void print(T[] arr){//泛型无返回值使用方法，打印任意数组类型T
+        for (T o : arr) {
+            System.out.print(o+" ");
+        }
+    }
+    public static <T> T get(T[] arr,int index){//泛型方法，返回值为T类型
+        return arr[index];//返回数组指定索引位置的元素
+    }
+}
+```
+##### 2、**通配符(wildcard)与上下限**
+通配符是泛型类型的占位符，通配符可以接受任意类型，如：`List<?>`、`List<? extends Car>`、`List<? super BYD>`等。
+> **其中泛型上限**：`? extends Car`表示只能接受Car及其子类
+> 
+> **其中泛型下限**：`? super BYD`表示只能接受BYD及其父类
+> 
+> 如果通配符是`?`，则能够接受所有的类型变量
+```java
+public class WildcardGeneric {
+    public static void main(String[] args) {
+        ArrayList<Car> cars = new ArrayList<>();
+        cars.add(new Car());
+        cars.add(new Bmw());
+        cars.add(new BYD());
+        run(cars);//输出：汽车在跑\n宝马在跑\n比亚迪在跑
+
+        ArrayList<Bmw> bmws = new ArrayList<>();
+//        run(bmws);//报错，因为集合里面只能是Car类
+        bmws.add(new Bmw());
+        SystemOut(bmws);//输出：BMW
+    }
+    
+    public static void run(ArrayList<Car> cars){
+        //这里是虽然是父类，但是只能够访问Car类，不能访问子类，不像多态
+        for (Car car : cars) {  car.run();  }
+    }
+    
+    public static void SystemOut(ArrayList<? extends Car> cars){
+        //这里使用通配符上限，可以访问Car类，也可以访问Car子类
+        for (Car car : cars) {
+            System.out.println(car);
+        }
+    }
+}
+class Car{
+    public void run(){  System.out.println("汽车在跑"); }
+    @Override
+    public String toString() {  return "Car"; }
+}
+class Bmw extends Car{...}//重写Car的run和toString
+class BYD extends Car{...}//重写Car的run和toString
+```
+##### 3、泛型支持的类型
+泛型不支持基本数据类型，如：`int`、`char`、`boolean`等，但可以支持对象类型(引用类型)
+> **解释**：泛型工作在编译阶段，编译阶段结束后不工作了，故泛型在编译后会被擦除，所有类型都会恢复成`Object`类型
+>
+> 而Object类型**只能接收引用类型（自定义类型或包装类）**，如：`Integer`、`Character`等包装类(把基本数据类型的数据包装成对象的类型)。
+> 
+> 包装类：`Integer`、`Character`、`Boolean`、`Byte`、`Short`、`Long`、`Float`、`Double`
+```java
+Integer it1 = Integer.valueOf(10);//把10包装为Integer对象给it
+//这样包装可以不用创建一个新的10对象，而是把对象10直接传入it，省去创建一个10对象的过程
+//java缓存了Integer对象-128~127，能够直接返回缓存中的对象
+Integer it2 = Integer.valueOf(10);
+System.out.println(it1==it2);//true，但是如果二者都传入对象130，则返回false
+
+//自动包装：基本数据类型的数据可以自动包装成包装对象的数据，不需要做额外的事情
+Integer it3 = 10;//与Integer it3 = Integer.valueOf(10);效果一样
+ArrayList<Integer> list = new ArrayList<>();
+list.add(1234);//自动装箱
+
+//自动拆箱：包装对象可以自动拆箱成基本数据类型的数据
+System.out.println(it3);//true
+int i = list.get(0);//自动拆箱
+
+//===================================================
+//把基本数据类型转换成字符串，public static String toString(doubel d)
+System.out.println(Integer.toString(list.get(0))+1);//12341
+Interger p=list.get(0);
+String s = p.toString();
+System.out.println(s+1);//12341
+
+//字符串类型转基本数据类型，public static Integer valueOf(String s)
+String s1="98";
+//int i1 = Integer.parseInt(s1);//parseInt/parseDouble和valueOf效果一样
+int i1 = Integer.valueOf(s1);
+System.out.println(i1+2);//100
+```
 ### 四、集合框架
 
 ### 五、Stream流

@@ -247,10 +247,13 @@ public class TestPolymorphism {
         people p1=new student();//多态调用不了子类的独有功能
         people p2=new teacher();
         show(p1);
+        show(p2);
+        System.out.println(p1.name);//成员变量：编译看左边，运行也看左边
     }
-    public static void show(people p) {//父类类型作为参数，可以接收一切子类变量，不能为Student或者teacher
+    public static void show(people p) {
+        //父类类型作为参数，可以接收一切子类变量，不能为Student或者teacher
         System.out.println("=====+++=====");
-        p.run();
+        p.run();//调用方法：编译看左边，运行看右边
     }
 }
 ```

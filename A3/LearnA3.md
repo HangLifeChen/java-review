@@ -308,7 +308,126 @@ String s1="98";
 int i1 = Integer.valueOf(s1);
 System.out.println(i1+2);//100
 ```
-### 四、集合框架
+### 四、集合
+1、集合：一种容器，类似数组，但集合大小不固定。
+
+2、两类集合：单列集合、双列集合。
+>**Collection代表单列集合**，每个元素（数据）只包含一个值
+> 
+>**Map代表双列集合**，每个元素包含两个值，key和value（键值对）
+#### (一)、Collection集合
+> **Collection集合体系**：
+>
+> |                 |              | ->LinkedList<E> |                    |
+> |-----------------| ------------ | --------------- | ------------------ |
+> |                 | ->List<E>    < | ->ArrayList<E>  |                    |
+> | Collection<E>   < |              |                 |                    |
+> |                 | ->Set<E>     < | ->HashSet<E>    | ->LinkedHashSet<E> |
+> |                 |              | ->TreeSet<E>    |                    |
+>
+> **Collection集合特点**：
+>
+>       List系列集合特点：添加的元素是有序、可重复、有索引的
+>       Set系列集合特点：添加的元素是无序（不按照添加顺序展示）、**不可重复**、**无索引的**
+>         |HasheSet:无序、不重复、无索引
+>         |LinkedHashSet:**有序**、不重复、无索引
+>         |TreeSet:**按照大小默认升序排列**、不重复、无索引
+
+##### 1、Collection集合功能：
+Collection<E>集合为其他单列集合祖宗接口，它的方法是全部单列结合都会继承。
+
+| Collection方法名                | 说明           |
+|------------------------------|--------------|
+| public boolean add(E e)      | 把元素e添加到集合中，并返回true |
+| public void clear()          | 清空集合中的元素     |
+| public boolean remove(E e)   | 删除集合中元素e，并返回true |
+| public boolean contains(E e) | 判断集合中是否包含元素e，返回true |
+| public boolean isEmpty()     | 判断集合是否为空，返回true |
+| public int size()            | 返回集合中元素的个数   |
+| public Object[] toArray()    | 把集合中的元素，存储到数组中 |
+##### 2、**把集合中的元素，存储到数组中**：
+```
+String[ ] arr = list.toArray(new String[0]);
+for (String s : arr) { System.out.print(s+" "); }//输出数组
+```
+##### 3、集合的三种遍历：
+
+###### (1)、**迭代器**：Iterator<E> e=collection.iterator();
+集合的专用遍历方式(数组没有)
+```Java
+Collection<String> collection = new ArrayList<>();
+collection.add("张三");collection.add("李四");...//添加元素
+
+Iterator<String> it= collection.iterator();//得到集合的迭代器对象
+while (it.hasNext()) {//.hasNext()判断集合中是否还有元素，有返回true，没有返回false
+    String next = it.next();
+    System.out.print(next+" ");//输出：张三 李四 ...
+}
+```
+###### (2)、**增强for循环**：for(元素数据类型 变量名 : 集合名){ }
+增强for循环：可以遍历集合或者数组，其本质是迭代器遍历集合的简化写法
+```Java
+for (String s : collection) {
+    System.out.print(s+" ");    }
+```
+###### (3)、Lambda表达式：集合对象名.forEach(E e)
+Collection提供的方法
+```Java
+collection.forEach(new Consumer<String>() {//匿名内部类，函数接口，重写方法accept
+    @Override
+    public void accept(String s) {
+        System.out.print(s+" ");
+    }
+});
+collection.forEach(s -> System.out.print(s+" "));////使用Lambda方法
+collection.forEach(System.out::println);//方法引用简化，每输出一个值都会换行
+```
+###### (4)、三种遍历方式区别
+迭代器：没有索引时，遍历并操作只能用迭代器。有索引时，可以不用迭代器（可以解决并发修改异常的问题）。
+
+增强for和Lambda：只适合做有索引时的遍历。（无法解决并发修改异常的问题）
+```Java
+Collection<String> list= new ArrayList<>();
+list1.add("田五");list1.add("田六");...//添加元素
+//迭代器
+    Iterator<String> it= list1.iterator();
+        while (it.hasNext()){
+            String name=it.next();
+            if(name.contains("田")){
+                it.remove();//这里是直接用迭代器自己方法删除指向的元素
+                //list1.remove(name);//要是这样删除就会报异常，会出现并发修改异常
+        }
+    }
+//普通for
+    for(int i=0;i<list.size();i++){//或使用倒叙遍历
+        String name=list.get(i);
+        if(name.contains("田")){
+            list.remove(name);
+        //没有i--时，每次删除数据导致后一位数据前进，i有跨位的问题，导致漏删
+            i--;//加上，删除后后撤一步
+        }
+    }
+//增强for
+    for(String s:list1){
+        if(s.contains("田")){
+            list1.remove(s);//出现并发修改异常
+        }
+    }
+//Lambda表达式
+    list1.forEach(s->{
+        if (s.contains("田"))
+        list1.remove(s);//并发修改异常
+    );
+```
+#### (二)、List集合
+List集合：包括ArrayList、LinkedKist；都是有序、可重复、有索引的；同时继承Collectio集合方法。
+
+| List方法名                 | 说明                  |
+|-------------------------|---------------------|
+| void add(int index,E e) | 在指定位置插入元素e          |
+| E remove(int index)     | 删除指定位置的元素e，返回被删除的元素 |
+| E set(int index,E e)    | 修改指定位置的元素e，返回被修改的元素 |
+| E get(int index)        | 获取指定位置的元素e          | 
 
 ### 五、Stream流
 

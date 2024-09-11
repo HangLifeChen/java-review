@@ -434,12 +434,75 @@ List集合：包括ArrayList、LinkedKist；都是有序、可重复、有索引
 注意：ArrayList集合**new对象的时候位空数组**，第一次添加数据时，会创建一个**默认大小为10的数组**，每当集合元素个数超过数组大小时，会**扩容成原来的1.5倍**。
 
 ##### 2、LinkedList集合(基于链表)(建队列/栈)：
-基于双链表存储数据：**内存中不连续的一块区域B，每个结点包含数值和上、下一个结点地址**，查询数据慢，但是增删改数据效率高，同时双链表相对于单链表查询较快。
+基于双链表存储数据：**内存中不连续的一块区域B，每个结点包含数值和上、下一个结点地址**，查询数据慢，但是增删数据效率高，同时双链表相对于单链表查询较快，链表可以创建索引(跳表)。
 
 LinkedList集合：相较于其他的集合，多了许多首尾操作的特有方法`void addFirst(E e)`,`void addLast(E e)`,`E removeFirst()`,`E getFirst()`等。
 
 **应用场景**：可以用来设计队列（只在首位增删数据）。可以用来设计栈（只在栈顶增删数据）。
-### 五、Stream流
+
+#### (三)、Set集合
+Set集合：无序，不重复，无索引。
+
+(Set家族自己几乎没有额外新增的常用功能，启用到的方法几乎都是Collection中的方法)
+
+| Set系列集合          | 说明                    |
+|------------------|-----------------------|
+| HashSet<E>       | 无序，不重复，无索引            |
+| LinkedHashSet<E> | `有序`，不重复，无索引          |
+| TreeSet<E>        | `排序（默认大小升序排序）`，不重复，无索引 |
+
+**应用场景**：常用于去重，去重后，Set集合中的元素个数就是去重后元素个数。
+##### 1、HashSet集合：
+没有重复的元素，无索引，耗内存（每个数组元素都挂着一串链表或一个红黑树），相对还是不错的集合。
+> 哈希值：`int`类型的随机值，Java中每个对象都有自己的Hash值，`Object类`提供`int hashCode();`返回对象的Hash值。
+> 
+> 对象Hash值特点：同一个对象多次调用hashCode()方法，返回值是相同的。不同对象hash值大概率不相等，但可能相等（Hash碰撞）。
+
+HashSet底层是Hash表存储数据的，JDK8之前：`Hash表=数组+链表`，JDK8始：`Hash表=数组+链表-+红黑树`。（Hash表增删改查性能都很好的数据结构）
+
+> JDK8之前：数组+链表
+> 
+>       a、HashSet第一次添加数据，创建默认大小为16的数组，默认加载因子为0.75，数组名table。如果要扩容，则到16*0.75=12时，扩容到原来两倍。
+>       b、使用元素的Hash值对数组的长度做运算计算出应存入的位置。
+>       c、判断当前位置是否为null，如果是null直接存入。
+>       d、如果不为null，表示有元素，则调用equals方法比较相等，则不存；不相等，则存入数组。
+>           |JDK8之前，新元素存入数组，占老元素位置，老元素挂下面
+>           |JDK8始，新元素直接挂在老元素下面
+> 
+> JDK8始：数组+链表+红黑树(查询性能比链表要好)
+>       
+>       当链表长度大于8，且数组长度>=64时，自动将链表转成红黑树。
+>       红黑树（增删改查新能较好的数据结构/）：自平衡二叉树。
+##### HashSet集合元素去重操作：
+由于每一个对象的`Hash`值不一样，如果两个不同对象内的值相同，但是他们的Hash值不同，此时我们就需要**重写对象的`hashCode()`和`equals()`方法**，使得两个对象`HashCode`相等。
+
+```java
+class Student {//重写hashCode()和equals()方法，可以自动生成
+    private String name;
+    private int age;
+    private String gender;
+
+    @Override
+    public boolean equals(Object o) {//内容的比较，只要内容一样，结果一定是true
+        if (this == o) return true;//this指当前对象，o指传入的对象，自己和自己比直接返回true
+        if (o == null || getClass() != o.getClass()) return false;//判断是否为空，是否为同一个对象相比较
+        Student student = (Student) o;//强转
+        return age == student.age && Objects.equals(name, student.name) && Objects.equals(gender, student.gender);//比较各个属性
+    }
+
+    @Override
+    public int hashCode() {
+        //保证不同的学生对象，如果内容一样返回的哈希值一定是一样的
+        return Objects.hash(name, age, gender);
+    }
+    //...Getter()、Setter()、toString()、有参无参构造方法省略
+}
+```
+##### 2、LinkedHashSet集合：
+##### 3、TreeSet集合：
+#### (四)、Map集合
+
+### 五、Stream流(辅助集合)
 
 ### 六、方法传递
 

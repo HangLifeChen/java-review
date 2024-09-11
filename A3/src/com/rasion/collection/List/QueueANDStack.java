@@ -1,4 +1,4 @@
-package com.rasion.collection;
+package com.rasion.collection.List;
 
 import java.util.LinkedList;
 

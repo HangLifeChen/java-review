@@ -308,7 +308,7 @@ String s1="98";
 int i1 = Integer.valueOf(s1);
 System.out.println(i1+2);//100
 ```
-### 四、集合
+### 四、Collection集合
 1、集合：一种容器，类似数组，但集合大小不固定。
 
 2、两类集合：单列集合、双列集合。
@@ -499,18 +499,71 @@ class Student {//重写hashCode()和equals()方法，可以自动生成
 }
 ```
 ##### 2、LinkedHashSet集合：
+依然基于Hash表实现的，但是它的每个元素都额外的多了一个**双链表**的机制**记录它的前后元素位置**。
+
+但是它每个结点更加占用内存。
 ##### 3、TreeSet集合：
-#### (四)、Map集合
+底层基于红黑树实现的排序：
 
-### 五、Stream流(辅助集合)
+    (1). Integer,Double默认按照数值本身的大小进行升序排序
+    (2). String默认按照字典序（即首字母编号）进行排序
+    (3). 自定义对象不能直接排序，需要重写`Comparable`接口的`compareTo()`方法，按照自定义的规则进行排序
+```java
+//TreeSet不能为自定义对象排序，因为不知道大小规则
+    //方案一：对象类实现一个Comparable比较接口，重写compareTo方法，指定大小比较规则
+    @Override//Student类需要继承Comparable<Student>
+    public int compareTo(Student o) {
+        //比较者：this
+        //被比较者：o
+        //规则1：若左边大于右边，返回正整数
+        //规则2：若左边小于右边，返回负整数
+        //规则3：若左边等于右边，返回0
+        //年龄升序
+        if(this.age>o.age){
+            return 1;
+        }else if(this.age<o.age){
+            return -1;
+        }
+        return 1;//如果为0的话，则会删除二者之一不显示，若为1的话返回this
+        //return this.age-o.age;//升序
+        //return o.age-this.age;//降序
+    }
 
-### 六、方法传递
+    //方案二：public TreeSet(Comparator c)集合自带比较器Comparator对象，指定比较规则
+    TreeSet<Student> s2=new TreeSet<>(new Comparator<Student>() {
+        @Override
+        public int compare(Student o1, Student o2) {
+    //           return o1.getAge()-o2.getAge();//若为double则强转有风险
+    //           return Double.compare(o1.getAge(),o2.getAge());//使用封装函数
+                if(o1.getAge()>o2.getAge()) return 1;
+                else if(o1.getAge()<o2.getAge()) return -1;
+                else return 1;//这样写更加保险并且操作性更高，可以免掉去重
+            }
+        });
+    TreeSet<Student> s3=new TreeSet<>((o1, o2) -> Double.compare(o1.getAge(),o2.getAge()));//Lambda表达式简化
+    TreeSet<Student> s4=new TreeSet<>(Comparator.comparingInt(Student::getAge));//方法引用简化
+```
+#### (四)、小结
+> 若想记住元素添加顺序，需存储重复元素，又要**频繁根据索引查询数据**：用`ArrayList集合`(**最常用**)。
+> 
+> 若想记住元素添加顺序，且**增删首尾情况较多**：用`LinkedList集合`。
+> 
+> 不在意元素顺序，也无重复元素需要存储，只希望增删改查都快：用`HashSet集合`。
+> 
+> 希望记住元素添加顺序，也没有重复元素需要存储，且希望增删改查都快：用`LinkedHashSet集合`。
+> 
+> 若想对以元素进行排序，也无重复元素需要存储，且希望增删改查都快：用`TreeSet集合`。
+### 五、Map集合
 
-### 七、字符集
+### 六、Stream流(辅助集合)
 
-### 八、IO流
+### 七、方法传递
 
-### 九、学习链接
+### 八、字符集
+
+### 九、IO流
+
+### 十、学习链接
 1. [黑马程序员Java课程](https://www.bilibili.com/video/BV1gb42177hm?p=114&spm_id_from=pageDriver&vd_source=2140b8696bb75ad7bd33e1195bf24372)
 2. [A3部分代码仓库](https://gitee.com/RasionLS/java-learn/tree/master/A3)
 3. [泛型：继承和通配符](https://blog.csdn.net/yubin1285570923/article/details/108135595)

@@ -312,28 +312,35 @@ System.out.println(i1+2);//100
 1、集合：一种容器，类似数组，但集合大小不固定。
 
 2、两类集合：单列集合、双列集合。
+
+3、`Collection<E>`、L`ist<E>`、`Set<E>`和`Map<K,V>`只是接口，其子类都是其实现类。
 >**Collection代表单列集合**，每个元素（数据）只包含一个值
 > 
 >**Map代表双列集合**，每个元素包含两个值，key和value（键值对）
 #### (一)、Collection集合
 > **Collection集合体系**：
 >
-> |                 |              | ->LinkedList<E> |                    |
-> |-----------------| ------------ | --------------- | ------------------ |
-> |                 | ->List<E>    < | ->ArrayList<E>  |                    |
-> | Collection<E>   < |              |                 |                    |
-> |                 | ->Set<E>     < | ->HashSet<E>    | ->LinkedHashSet<E> |
-> |                 |              | ->TreeSet<E>    |                    |
+> | 接口                | 接口             | 实现类                   | 实现类               |
+> |-------------------|----------------|-----------------------|-------------------|
+> |                   |                | ->`LinkedList<E>`(常用) |                   |
+> |                   | ->`List<E> `   < | ->`ArrayList<E>`      |                   |
+> | `Collection<E>`   < |                |                       |                   |
+> |                   | ->`Set<E>`     < | ->`HashSet<E> `       | ->`LinkedHashSet<E>` |
+> |                   |                | ->`TreeSet<E> `       |                   |
 >
 > **Collection集合特点**：
 >
->       List系列集合特点：添加的元素是有序、可重复、有索引的
->       Set系列集合特点：添加的元素是无序（不按照添加顺序展示）、**不可重复**、**无索引的**
->         |HasheSet:无序、不重复、无索引
->         |LinkedHashSet:**有序**、不重复、无索引
->         |TreeSet:**按照大小默认升序排列**、不重复、无索引
+> | Collection集合                        | 特点说明          |
+> |---------------------------|---------------| 
+> | List系列集合：                 | 有序、可重复、有索引的   |
+> | ArrayList(`根据数组`)         | 有序、可重复、有索引的   |
+> | LinkedList(`根据链表`)        | 有序、可重复、有索引的   | 
+> | Set系列集合：                  | 无序、不可重复、无索引的  |
+> | HashSet(`根据哈希表`)          | `无序`、不可重复、无索引的  | 
+> | LinkedHashSet(`双链表索引哈希表`) | `有序`、不可重复、无索引的  |
+> | TreeSet(`根据红黑树`)          | `可排序`、不可重复、无索引的 |
 
-##### 1、Collection集合功能：
+##### 1、Collection集合方法：
 Collection<E>集合为其他单列集合祖宗接口，它的方法是全部单列结合都会继承。
 
 | Collection方法名                | 说明           |
@@ -554,7 +561,82 @@ class Student {//重写hashCode()和equals()方法，可以自动生成
 > 
 > 若想对以元素进行排序，也无重复元素需要存储，且希望增删改查都快：用`TreeSet集合`。
 ### 五、Map集合
+Map集合也叫做`键值对集合`，格式：`Map<K,V>`，其中K为键，V为值。
 
+注意：所有键不允许重复，但值可以重复，键与值是一一对应的，每一个键只能找到自己对应的值
+
+应用场景：存储一一对应的数据时。
+> **Map集合体系**：
+>
+> | 接口           | 实现类                      | 实现类                  |
+> |--------------|--------------------------|--------------------|
+> |              | ->HashMap<k,V>(常用)    -> | LinkedHashMap<K,V> |
+> | Map<K,V>   < |                          |                    | 
+> |              | ->TreeMap<K,V>           |                    |
+> 
+> **Map集合特点**：都是由键决定，值只是一个附属品，值不做要求
+> 
+> | Map集合                  | 特点说明         |
+> |------------------------|--------------|
+> | HashMap(由键决定特点)        | 无序、不重复、无索引   |
+> | LinkedHashMap(由键决定特点)  | `有序`、不重复、无索引 |
+> | TreeMap(由键决定特点)        | `排序`、不重复、无索引   |
+#### (一)、Map集合
+##### 1、Map集合方法
+| 方法名称                                | 说明                        |
+|-------------------------------------|---------------------------|
+| V put(K key,V value)                | 添加元素                      |
+| V get(Object key)                   | 根据键获取值                    |
+| V remove(Object key)                | 根据键删除键值对                  |
+| int size()                          | 获取元素大小                    |
+| void clear()                        | 清空集合                      |
+| boolean containsKey(Object key)     | 判断是否包含键key                | 
+| boolean containsValue(Object value) | 判断是否包含值value              |
+| boolean isEmpty()                   | 判断是否为空                    |
+| boolean equals(Object o)            | 判断是否相等                    |
+| Set<K> keySet()                     | 获取全部键的集合(Set集合不可重复)       |
+| Collection<V> values()              | 获取全部值的集合(Collection集合可重复) |
+| Set<Map.Entry<K,V>> entrySet()      | 获取全部键值对集合(Set集合不可重复)      |
+| default void forEach(BiConsumer<? super K,? super V> action)| 结合Lambda表达式遍历集合|
+##### 2、Map集合遍历方式
+###### 键找值
+思想：先获取Map集合全部键，再通过遍历的方式来找值（Set<K> keySet()、V get(Object key)）
+```java
+//遍历
+    Set<String> keySet=map.keySet();
+    for(String key:keySet){
+        System.out.println(key+":"+map.get(key));
+    }
+```
+###### 键值对
+思想：把`键值对`整体包装成一个Entry的实现类对象进行遍历（Set<Map.Entry<K,V>> entrySet()）
+```java
+//键值对遍历
+    Set<Map.Entry<String,String>> entrySet=map.entrySet();
+    for(Map.Entry<String,String> entry:entrySet){
+        String key=entry.getKey();
+        String value=entry.getValue();
+        System.out.println(key+":"+value);
+//        System.out.println(entry);//一步到位，和上面三行代码一样功能
+    }
+//一步到位，不需要在for外创建Set对象entrySet()
+    for(Map.Entry<String,String> entry:map.entrySet()){
+        System.out.println(entry);
+    }
+```
+###### Lambda
+default void forEach(BiConsumer<? super K,? super V> action)方法，结合Lambda表达式遍历集合
+```java
+//Lambda 遍历
+    map.forEach(new BiConsumer<String, String>() {
+        @Override
+        public void accept(String s, String s2) {
+            System.out.println(s+":"+s2);
+        }
+    });
+//函数式接口的匿名内部类
+    map.forEach((key,value)-> System.out.println(key+":"+value));
+```
 ### 六、Stream流(辅助集合)
 
 ### 七、方法传递

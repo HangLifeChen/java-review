@@ -685,7 +685,118 @@ public class MapTest {
 }
 ```
 ### 六、Stream流(辅助集合)
+Stream流是Java8新特性，结合Lambda，**用来简化集合遍历，简化数据处理，简化数据收集**的一种编程方式。
 
+#### (一)、Stream流开发步骤：
+
+    1、创建数据源（集合/数组），获取数据源的Stream流
+    2、获取一个流中的数据，对数据进行操作，得到一个结果（对数据处理计算）
+    3、获取处理的结果（遍历统计收集到一个新的集合中返回）
+```java
+List<String> list = List.of("张三峰", "张三", "流水","qiqi");
+
+//传统方案找出姓张的三个字的人
+    List<String> newlist=new ArrayList<>();
+    for (String s : list) {
+        if(s.startsWith("张")&&s.length()==3){
+            newlist.add(s);
+        }
+    }
+    System.out.println(newlist);
+
+//stream流
+    list.stream().filter(s->s.startsWith("张"))
+                .filter(s->s.length()==3)
+                .forEach(System.out::println);
+
+//stream流收集传回对象
+    List<String> newlist2=list.stream().filter(s->s.startsWith("张")).filter(s->s.length()==3).collect(Collectors.toList());
+    System.out.println(newlist2);
+```
+#### (二)、获取Stream流
+Stream流本身是一个接口，所以需要通过Collection集合的`Stream<E> stream()`方法获取，数组的通过`Stream<T> stream(T[] array)`/`stream<T> of(T.. values)`工具类获取。
+```java
+public static void getstreams(){
+    //获取Stream流
+    //1、集合stream流，所有单列结合获取Stream流都要调用stream方法
+    Collection<String> list = new ArrayList<>();
+    Stream<String> liststream = list.stream();
+
+    //2、Map集合获取Stream流，获取键流，值流，键值对流
+    Map<String, String> map=new HashMap<>();
+    Stream<String> valueStream = map.values().stream();//值流
+    Stream<String> keyStream = map.keySet().stream();//键流
+    Stream<Map.Entry<String, String>> entryStream = map.entrySet().stream();//键值对流
+
+    //3、获取数组的流
+    String[] strs = {"a","b","c"};
+    Stream<String> stream = Arrays.stream(strs);
+    Stream<String> stream1 = Stream.of(strs);
+    Stream<String> stream2 = Stream.of("a","b","c");//等价于Arrays.stream(strs)
+}
+```
+#### (三)、Stream流中间方法
+Stream流为链式编程，用完一个流后会返回一个新的流再接着使用。
+
+| Stream流提供的中间方法                                                              | 说明                                                  |
+|-----------------------------------------------------------------------------|-----------------------------------------------------|
+| `Stream<T> filter(Predicate<? super T> predicate)`                          | 筛选，过滤，过滤流中的元素，返回一个新流，该流包含所有满足指定条件的元素                |
+| `<R> Stream<T> map(Function<? super T,? extends R> mapper)`                 | 映射，把流中的元素按照一定的规则映射到另一个流中                            |
+| `static <T> Stream<T> concat(Stream<? extends T> a, Stream<? extends T> b)` | 合并两个流，返回一个新流                                        |
+| `Stream<T> sorted()`                                                        | 对元素进行升序排序                                           |
+| `Stream<T> sorted(Comparator<? super T> comparator)`                        | 按照指定规则排序                                            |
+| `Stream<T> distinct()`                                                      | 去除流中重复元素(基本类型已经重写HashCode和equals方法，所以可以去除自定义对象重复元素) |
+| `Stream<T> limit(long maxSize)`                                             | 获取前n个元素，返回一个新流                                      |
+| `Stream<T> skip(long n)`                                                    | 跳过前n个元素，返回一个新流                                      |
+| `Stream<T> peek(Consumer<? super T> action)`                                | 对每个元素进行操作                                           |
+
+```java
+public static void getdouble(){
+    List<Double> list = Arrays.asList(1.1, 2.2, 3.3, 4.4, 5.5,5.5, 6.6, 7.7, 8.8, 9.9, 10.1);
+    //默认升序,去重
+    list.stream().sorted().distinct().forEach(System.out::println);
+    System.out.println("=====");
+    //只需要最大的两个元素
+    list.stream().sorted(Comparator.reverseOrder()).distinct().limit(2).forEach(System.out::println);
+    System.out.println("=====");
+    //跳过前两个
+    list.stream().skip(2).forEach(System.out::println);
+    System.out.println("=====");
+    //加工方法
+    list.stream().map(s->"加十分后"+(s+10)).forEach(System.out::println);
+    System.out.println("=====");
+    //合并流
+    Stream<Double> stream1 = Stream.of(1.1, 2.2, 3.3);
+    //统计合并的流的长度
+    System.out.println(Stream.concat(stream1,list.stream()).count());
+}
+```
+#### (四)、Stream流终结方法
+终结方法是指调用完成后，不会返回新的Stream流，没法继续使用流。
+
+| Stream流终结方法 | 说明                                         |
+|-------------|--------------------------------------------|
+| `void forEach(Consumer<? super T> action)` | 遍历，对流中的元素进行消费，不返回新的流，遍历完就结束了               |
+|`long count()` | 统计流中元素个数                                   |
+|`Optional<T> min(Comparator<? super T> comparator)` | 返回流中的最小元素(给一个比较器)，如果流为空，返回Optional.empty() |
+|`Optional<T> max(Comparator<? super T> comparator)` | 返回流中的最大元素，如果流为空，返回Optional.empty()         |
+```        
+//Optional的Stream流终结方法
+    Optional<Double> max=list.stream().max((list1,list2)->Double.compare(list1,list2));
+    System.out.println(max);//输出最大的值
+```
+#### (五)、收集Stream流
+Stream流是方便操作集合/数组的手段，但是数组/集合才是开发中的目的，我们要**把流操作后的结果转到数组/集合中**。
+
+| Stream流收集方法 | 说明                                                |
+|-------------|---------------------------------------------------|
+| `R collect(Collector<? super T, A, R> collector)` | 收集流中的元素，返回一个新集合，或者一个新数组，或者一个新值，具体看Collector接口的实现  |
+|`Object[] toArray()` | 把流中的元素收集到数组中，返回一个Object数组，元素类型为流中元素的类型            |
+|`static <T> collector toList()` | 把流中的元素收集到List集合中，返回一个List集合，元素类型为流中元素的类型            |
+|`static <T> collector toSet()` | 把流中的元素收集到Set集合中，返回一个Set集合，元素类型为流中元素的类型            |
+|`static <T> collector toMap(Function<? super T, ? extends K> keyMapper, Function<? super T, ? extends U> valueMapper)` | 把流中的元素收集到Map集合中，返回一个Map集合，元素类型为流中元素的类型，keyMapper和valueMapper是函数式接口，用来获取键值对 |
+
+一个流只能收集一次，所以想要把流转到两个集合/数组中去只能重新创建流，或者使用函数赋值。
 ### 七、方法传递
 
 ### 八、字符集

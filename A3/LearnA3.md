@@ -797,6 +797,17 @@ Stream流是方便操作集合/数组的手段，但是数组/集合才是开发
 |`static <T> collector toMap(Function<? super T, ? extends K> keyMapper, Function<? super T, ? extends U> valueMapper)` | 把流中的元素收集到Map集合中，返回一个Map集合，元素类型为流中元素的类型，keyMapper和valueMapper是函数式接口，用来获取键值对 |
 
 一个流只能收集一次，所以想要把流转到两个集合/数组中去只能重新创建流，或者使用函数赋值。
+#### (六)、综合案例
+1、可变参数：格式`数据类型...参数名称`
+
+优势：接收参数灵活，可以替代数组传参，内部拿取数据为数组，可变参数在形参列表中只能有一个，只能在形参列表中最后面。
+
+2、Collectors工具类：操作集合的工具类，静态方法。
+
+    批量加数据：`Collections.addAll(list,元素1,元素2,元素3...);`
+    打乱List集合中元素排序：`Collections.shuffle(list);`
+    对List集合元素升序排序：`Collections.sort(list);`
+    对List集合按照比较器排序：`Collections.sort(list,比较器);`
 ### 七、方法传递
 
 ### 八、字符集

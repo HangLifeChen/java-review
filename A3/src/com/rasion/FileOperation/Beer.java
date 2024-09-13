@@ -1,4 +1,4 @@
-package com.rasion.FileAndIO;
+package com.rasion.FileOperation;
 
 public class Beer {
     public static void main(String[] args) {

@@ -820,7 +820,7 @@ Stream流是方便操作集合/数组的手段，但是数组/集合才是开发
 
 2、文件操作实例：
 ```java
-public static void startFile(){
+public static void startFile(){//(见FileOperate.Files.java)
     //创建File对象，获取某个文件的信息，默认在工程下找
     String path = "resource\\mapper.png";//或是String path = "resource/mapper.png";
     String path2 = "resource/exists.txt";
@@ -909,7 +909,7 @@ public static void startFile(){
 
 递归算法三要素(以阶乘为例)：递归要有公式、递归有终结点、递归方向要走向终结点。（有明确公式规定的）
 
-无明确公式：如在D盘搜索WeChat.exe文件和啤酒问题(见A3->FileAndIO.Beer.java)
+无明确公式：如在D盘搜索WeChat.exe文件(见FileOperation.Search.java)和啤酒问题(见A3->FileOperation.Beer.java)
 > 1. 获取D盘下的所有一级文件对象
 > 2. 遍历全部一级文件对象，判断是否是文件WeChat.exe
 > 3. 若为文件，判断是否为自己想要的
@@ -973,7 +973,135 @@ System.out.println(Arrays.toString(bytes));//打印字节数组
 System.out.println(new String(bytes,"GBK"));//通过GBK解码
 ```
 ### 九、IO流
+#### 1、应用场景：写入读出数据。
 
+#### 2、IO流分类：
+按照流防线分为——输入流和输出流。按照流的内容——字节流(所有类型文件)和字符流(只适合纯文本)。
+
+    以下四类为抽象类
+        字节输入流：InputStream（读字节数据），实现类：FileInputStream
+        字节输出流：OutputStream（写字节数据），实现类：FileOutputStream
+        字符输入流：Reader（读字符数据），实现类：FileReader
+        字符输出流：Writer（写字符数据），实现类：FileWriter
+#### 3、字节流适合做数据的转移，如文件的复制。
+· 资源释放的方式：`try{...代码主体}catch(Exception e){e.printStackTrace();}finally{...释放资源并检测异常}`
+
+· 释放资源更完善的方式：`try(...资源对象){...代码主体}catch(Exception e){e.printStackTrace();}`
+
+· 资源对象：继承了AutoCloseable或Closeable接口的对象，如FileInputStream等
+```
+//复制文件：文件->创建字节输入流管道->read->字节数组->write->创建字节输出流管道->另一个文件
+public static void copyFile(){//复制文件的抛出异常
+    FileOutputStream fos = null;
+    FileInputStream fis = null;//定义流为空，确保finally内部能够使用
+    try {
+        fis = new FileInputStream("resource/mapper.png");//给流一个对象
+        fos = new FileOutputStream("resource/hello.png");
+        byte[] b = new byte[1024];
+        int len;
+        while ((len = fis.read(b)) != -1) {
+            fos.write(b, 0, len);
+        }
+        System.out.println("复制完成");
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try{if(fos!=null)fos.close();}//释放资源也要检测异常，确保资源完美关闭完
+        catch (Exception e){e.printStackTrace();}
+        try{if(fos!=null)fis.close();}
+        catch (Exception e){e.printStackTrace();}
+    }
+}
+//抛出异常更加优雅
+public static void copyFile() throws Exception {
+    try(//这里只能放资源对象，用完后会自动关闭管道，不用finnally
+        FileOutputStream fis = new FileInputStream("resource/mapper.png");//管道流定义
+        FileInputStream fos = new FileOutputStream("resource/hello.png");)
+    {   byte[] b = new byte[1024];
+        int len;
+        while ((len = fis.read(b)) != -1) {
+            fos.write(b, 0, len);
+        }
+        System.out.println("复制完成");
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+文件字节输入流，输出流实例：
+```
+public static void readFile() throws Exception {//文件字节输入流
+    //文件字节输入流读取文件中的字节数组到内存中去
+    //1、创建文件字节输入流对象
+    FileInputStream fis = new FileInputStream("resource/mapper.png");
+
+/*        //2、读取文件中字节并输出
+    int a;
+    while ((a = fis.read()) != -1) {//每次读取一次字节，读取汉字一定会乱码
+        System.out.print((char) a);
+    }//输出：HelloWorld!ä½ å¥½
+*/  
+/*
+    //每次读多个字节
+    byte[] b = new byte[7];
+    //定义一个变量存储每次读取的字节个数
+    int len;
+    while ((len = fis.read(b)) != -1) {//每次读取多个字节，与文件交互少，单读汉字有可能被截断
+        System.out.print(new String(b, 0, len));//读取多少倒多少出来
+    }
+*/
+    //定义一个与文件一样大的字节数组，这样用字节读取汉字就不会乱码，只适合读小文件
+    System.out.println(new String(fis.readAllBytes()));//用readAllBytes()方法一次性读取全部字节，避免乱码
+    fis.close();//3、释放资源
+}
+
+public static void writeFile() throws Exception{//字节输出流，不覆盖要加true
+/*        //文件字节输出流将字节数组写入文件中,当文件字节输出流输出后，文件原本的内容会被覆盖
+    //1、创建文件字节输出流对象，覆盖掉原文件
+    FileOutputStream fos = new FileOutputStream("resource/hello.txt");
+    //2、将字节数组写入文件中
+    fos.write(new byte[]{'a',100,'A',54,64});
+    byte[] bytes = "hello world".getBytes();
+    fos.write(bytes,0,bytes.length);
+    //3、关闭文件输出流对象
+    fos.close();
+*/
+    //追加数据
+    FileOutputStream fileo = new FileOutputStream("resource/hello.txt",true);
+    fileo.write("hello world".getBytes());
+    fileo.close();//关闭文件输出流对象管道
+}
+```
+
+#### 4、字符流适合做数据的处理，如文本的读取。
+字符输出流写出数据后，必须刷新流，或者关闭流，写出的数据才能生效。(先写在内存缓冲区，刷新.flush()缓冲区，才能写出数据，降低磁盘压力)
+```
+public static void readFile() throws Exception {
+    //文件字符输入流读取文件中的字节数组到内存中去
+    try(Reader fr = new FileReader("resource/hello.txt");){
+        char[] chars = new char[3];//创建一个数组，用来存储读取的字符数组
+        int len = fr.read(chars);
+        while (len!=-1){
+            System.out.print(new String(chars,0,len));
+            len = fr.read(chars);
+        }
+    }catch (Exception e){
+        e.printStackTrace();
+    }
+}
+
+public static void writeFile(){//字符输出流，不覆盖要加true
+    try(Writer writer = new FileWriter("resource/hello.txt", true)){
+    //异常抛出包含关闭流writer.close()的操作，可以不用写。
+        writer.write("\n");
+        writer.write("FileWirter",1,3);//写一部分出去
+        writer.flush();//刷新缓冲区，写出数据
+    }catch (Exception e){e.printStackTrace();}
+}
+```
+#### 5、缓冲流
+##### 缓冲字节流
+##### 缓冲字符流
 ### 十、学习链接
 1. [黑马程序员Java课程](https://www.bilibili.com/video/BV1gb42177hm?p=114&spm_id_from=pageDriver&vd_source=2140b8696bb75ad7bd33e1195bf24372)
 2. [A3部分代码仓库](https://gitee.com/RasionLS/java-learn/tree/master/A3)

@@ -808,11 +808,7 @@ Stream流是方便操作集合/数组的手段，但是数组/集合才是开发
     打乱List集合中元素排序：`Collections.shuffle(list);`
     对List集合元素升序排序：`Collections.sort(list);`
     对List集合按照比较器排序：`Collections.sort(list,比较器);`
-### 七、方法传递
-
-### 八、字符集
-
-### 九、IO流
+### 七、文件操作与递归
 #### (一)、存储数据
 存储数据的方案：1、变量 2、数组 3、对象 4、集合 都存在内存中，一旦程序结束，数据就没有了。5、文件，存储在磁盘中，程序结束，数据还在。
 
@@ -909,6 +905,74 @@ public static void startFile(){
 ```
 
 #### (三)、多级文件搜索(递归)
+方法自己调用自己为递归。
+
+递归算法三要素(以阶乘为例)：递归要有公式、递归有终结点、递归方向要走向终结点。（有明确公式规定的）
+
+无明确公式：如在D盘搜索WeChat.exe文件和啤酒问题(见A3->FileAndIO.Beer.java)
+> 1. 获取D盘下的所有一级文件对象
+> 2. 遍历全部一级文件对象，判断是否是文件WeChat.exe
+> 3. 若为文件，判断是否为自己想要的
+> 4. 若为文件夹，继续调用1步骤
+```java
+public class FileSearch {//利用递归搜索盘符内某一文件并打开
+    public static void main(String[] args) {
+//        String fileName=startFileSearch();
+        File dir=new File("E:/");//搜索盘符
+        try {
+            searchFile(dir,"mapper.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static String startFileSearch(){
+        System.out.println("请输入要查找的文件名：");
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        return scanner.nextLine();
+    }
+    public static void searchFile(File dir,String fileName) throws IOException {
+        if(dir==null || !dir.exists() || !dir.isDirectory()) return;//文件不存在
+        //获取目录下的所有一级文件或文件夹对象
+        File[] files=dir.listFiles();
+        if(files!=null && files.length>0) {//当前目录是否存在一级目录或文件
+            for (File f : files) {
+                if (f.isFile()) {//判断是否为文件夹
+                    if (f.getName().contains(fileName)) {//模糊查询contains，精确查询equals
+                        System.out.println("文件名：" + f.getName() + " 路径：" + f.getAbsolutePath());
+                        Runtime.getRuntime().exec("explorer.exe "+f.getAbsolutePath());
+                    }
+                } else {
+                searchFile(f, fileName);//递归调用
+                }
+            }
+        }
+    }
+}
+```
+### 八、字符集(可以加密)
+#### (一)、数据的存储方案：字符集
+
+> 1. ASCII字符集，用一个字节存储一个字符，首位为0，共128个字符
+> 2. GBK字符集，汉字编码字符集，国标码，一个汉字占两个字节，共21844个字符，兼容ASCII字符据。
+> 3. 汉字的首位字节必须为1作为标识位，其他可以存储2^15=32768。
+> 4. Unicode字符集，万国码，UTF-32:一个字符4个字节，共42亿个字符，兼容GBK字符集。
+> 5. UTF-8字符集，可变长编码方案，共分4个长度区：1-4字节区。英文字符1字节区，汉字3字节区。
+> 6. 前缀码来辨认UTF-8字符集的长度，0开头为ASCII码，`110***** 10******`为2字节，`1110**** 10****** 10******`为3字节，`11110*** 10****** 10****** 10******`为4字节。
+#### (二)、对字符的编码和解码
+| String提供编码                               | 说明                      |
+|------------------------------------------|-------------------------|
+| byte[ ] getByte( )                       | 使用平台默认的字符集进行编码，返回一个字节数组 |
+| byte[ ] getBytes(String charsetName)     | 使用指定的字符集进行编码，返回一个字节数组   |   
+| **String解码**                             | **说明**                  |
+| String(byte[ ] bytes)                    | 通过使用平台默认的字符集解码，返回一个字符串  |
+| String(byte[ ] bytes,String charsetName) | 通过指定的字符集解码，返回一个字符串      |
+```java
+String name="你好，Rasion";//可以用来加密
+byte[] bytes=name.getBytes("GBK");//通过GBK编码,如果没有写为默认编码，默认为UTF-8
+System.out.println(Arrays.toString(bytes));//打印字节数组
+System.out.println(new String(bytes,"GBK"));//通过GBK解码
+```
+### 九、IO流
 
 ### 十、学习链接
 1. [黑马程序员Java课程](https://www.bilibili.com/video/BV1gb42177hm?p=114&spm_id_from=pageDriver&vd_source=2140b8696bb75ad7bd33e1195bf24372)

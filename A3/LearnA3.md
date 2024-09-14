@@ -820,7 +820,7 @@ Stream流是方便操作集合/数组的手段，但是数组/集合才是开发
 
 2、文件操作实例：
 ```java
-public static void startFile(){//(见FileOperate.Files.java)
+public static void startFile(){//(见FileOperate.Files.java)以下为一些文件的操作
     //创建File对象，获取某个文件的信息，默认在工程下找
     String path = "resource\\mapper.png";//或是String path = "resource/mapper.png";
     String path2 = "resource/exists.txt";
@@ -973,9 +973,9 @@ System.out.println(Arrays.toString(bytes));//打印字节数组
 System.out.println(new String(bytes,"GBK"));//通过GBK解码
 ```
 ### 九、IO流
-#### 1、应用场景：写入读出数据。
+应用场景：写入读出数据。
 
-#### 2、IO流分类：
+#### (一)、IO流分类：
 按照流防线分为——输入流和输出流。按照流的内容——字节流(所有类型文件)和字符流(只适合纯文本)。
 
     以下四类为抽象类
@@ -983,7 +983,7 @@ System.out.println(new String(bytes,"GBK"));//通过GBK解码
         字节输出流：OutputStream（写字节数据），实现类：FileOutputStream
         字符输入流：Reader（读字符数据），实现类：FileReader
         字符输出流：Writer（写字符数据），实现类：FileWriter
-#### 3、字节流适合做数据的转移，如文件的复制。
+#### (二)、字节流适合做数据的转移，如文件的复制。
 · 资源释放的方式：`try{...代码主体}catch(Exception e){e.printStackTrace();}finally{...释放资源并检测异常}`
 
 · 释放资源更完善的方式：`try(...资源对象){...代码主体}catch(Exception e){e.printStackTrace();}`
@@ -1073,7 +1073,7 @@ public static void writeFile() throws Exception{//字节输出流，不覆盖要
 }
 ```
 
-#### 4、字符流适合做数据的处理，如文本的读取。
+#### (三)、字符流适合做数据的处理，如文本的读取。
 字符输出流写出数据后，必须刷新流，或者关闭流，写出的数据才能生效。(先写在内存缓冲区，刷新.flush()缓冲区，才能写出数据，降低磁盘压力)
 ```
 public static void readFile() throws Exception {
@@ -1099,9 +1099,108 @@ public static void writeFile(){//字符输出流，不覆盖要加true
     }catch (Exception e){e.printStackTrace();}
 }
 ```
-#### 5、缓冲流
-##### 缓冲字节流
-##### 缓冲字符流
+#### (四)、缓冲流BufferedStream
+##### 1、缓冲字节流
+`BufferedInputStream`和`BufferedOutputStream`继承于`InputStream`和`OutputStream`
+
+作用：用于提升文件字节**输出输入流读写数据的性能**。
+
+原理：缓冲字节输入流自带8KB的缓冲池，缓冲字节输出流自带8KB的缓冲池。
+
+| 构造器                                        | 说明                         |
+|--------------------------------------------|----------------------------|
+| `public BufferedInputStream(InputStream is)` | 把低级的流包装成高级的缓冲字节输入流，提升读数据性能 |
+| `public BufferedOutputStream(OutputStream os)` | 把低级的流包装成高级的缓冲字节输出流，提升写数据性能 |
+```
+public static void copyFile(String source, String destination) {
+    try(// 创建一个文件输入流
+        InputStream is=new FileInputStream(source);
+        // 创建一个缓冲输入流，把文件输入流放到缓冲输入流中
+        InputStream bis=new BufferedInputStream(is);
+        // 创建一个文件输出流
+        OutputStream os=new FileOutputStream(destination,true);
+        // 创建一个缓冲输出流，把文件输出流放到缓冲输出流中
+        OutputStream bos=new BufferedOutputStream(os);
+    ){
+        byte[] bytes=new byte[1024];
+        int len;
+        while ((len=bis.read(bytes))!=-1){//使用缓冲字节输入流读取数据
+            bos.write(bytes,0,len);//使用缓冲字节输出流写出数据
+        }
+        bos.flush();
+        System.out.println("文件复制成功");
+    }catch (Exception e){throw new RuntimeException(e);}
+}
+```
+##### 2、缓冲字符流
+`BufferedReader`和`BufferedWriter`继承于`Reader`和`Writer`
+
+作用：自带8192的字符缓冲池，可以提升字符输入流的读写性能。
+
+| 构造器                               | 说明                         |
+|-----------------------------------|----------------------------|
+| `public BufferedReader(Reader r)` | 把低级的流包装成高级的缓冲字符输入流，提升读数据性能 |
+| `public BufferedWriter(Writer w)` | 把低级的流包装成高级的缓冲字符输出流，提升写数据性能 |
+| **方法**-                           | **说明**                     |
+|public String readLine()| 读取一行数据，返回字符串，读到文件末尾返回null |
+|public void newLine()| 写一行数据，换行，默认是\r\n，可以自定义换行符 |
+```
+public static void bfRW(){
+    try(BufferedReader br = new BufferedReader(new FileReader("resource/hello.txt"));//创建一个文件缓冲字符输入流
+        BufferedWriter bw = new BufferedWriter(new FileWriter("resource/hello2.txt"))//创建一个文件缓冲字符输出流
+    ){
+        String line = null;
+        while ((line = br.readLine())!=null){//Buffered.readLine()读取一行为独有的换行功能，不用多态写法
+            //目前读取文本最优方案
+            System.out.println(line);
+//          bw.write(line);//复制语句
+//          bw.newLine();//换行功能
+        }
+    }catch (Exception e){throw new RuntimeException(e);}
+}
+```
+#### (五)、性能分析
+默认桶大小设置为8KB，过大没有用，过小影响性能。当低级流读写数据时，桶加大可以媲美高级池。
+```
+public static void main(String[] args){
+    //使用低级的字节流一个一个字节的形式复制代码:36.487s，能正常打开,如果桶大小为8KB，则速度为0.015s
+    copyFileByte();
+    //使用低级的字符流:0.337s，文件大小为24180KB为源文件大小两倍，无法正常打开
+    copyFileCharacter();
+    //使用高级的缓冲字节流:0.015s，能正常打开
+    copyFileBufferedByte();
+    //使用高级的缓冲字符流:0.3s，文件大小为24180KB为源文件大小两倍，无法正常打开
+    copyFileBufferedCharacter();
+    //输出：
+//        Byte复制文件耗时：36.487s//此时桶大小为1B
+    //若果桶大小为1KB，则Byte速度为0.015s
+//        Character复制文件耗时：0.337s
+//        BufferedByte复制文件耗时：0.015s//此时桶大小为1KB
+    //若果桶大小为1KB，则BufferedByte速度为0.013s
+//        BufferedCharacter复制文件耗时：0.3s
+}
+
+private static void copyFileBufferedByte(){//以缓冲字节流复制文件为例，字符流可以不写桶大小
+    long start = System.currentTimeMillis();
+    try(
+            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(FILE_PATH));
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(FILE_PATH2+"bufferedByte.mp4"));
+    ){
+        byte[] bytes = new byte[1024*8];//桶大小为8KB
+        int len;
+        while((len=bis.read(bytes))!=-1){
+            bos.write(bytes,0,len);
+        }
+    }catch (Exception e){
+        e.printStackTrace();
+    }
+    long end = System.currentTimeMillis();
+    System.out.println("BufferedByte复制文件耗时："+(end-start)/1000.0+"s");
+}
+```
+#### (六)、其他流
+##### 1、字符输入转换流
+`InputStreamReader`**字符输入转换流**继承于`Reader`**字符输入流**，
 ### 十、学习链接
 1. [黑马程序员Java课程](https://www.bilibili.com/video/BV1gb42177hm?p=114&spm_id_from=pageDriver&vd_source=2140b8696bb75ad7bd33e1195bf24372)
 2. [A3部分代码仓库](https://gitee.com/RasionLS/java-learn/tree/master/A3)

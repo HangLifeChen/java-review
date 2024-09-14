@@ -1,4 +1,4 @@
-package com.rasion.FileIO;
+package com.rasion.FileIO.Character;
 
 import java.io.FileReader;
 import java.io.Reader;

@@ -1,4 +1,4 @@
-package com.rasion.FileIO;
+package com.rasion.FileIO.Byte;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

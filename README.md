@@ -12,7 +12,7 @@
 
 >[A3模块](https://gitee.com/RasionLS/java-learn/tree/master/A3)：Java异常、泛型、集合框架、Stream流、方法传递、字符集、IO流。√
 
->[A4模块](https://gitee.com/RasionLS/java-learn/tree/master/A4)：多线程、网络编程、反射、注解、代理。
+>[A4模块](https://gitee.com/RasionLS/java-learn/tree/master/A4)：多线程、网络编程、反射、注解、代理。√
 
 >[B1模块](https://gitee.com/RasionLS/java-learn/tree/master/B1)：人事系统；数字华容道游戏。√
 

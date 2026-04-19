@@ -280,10 +280,9 @@ System.out.println(二维数组名[0].length);//访问第0行的长度
 ##### 1、猜数字(GuessNumber)
 说明：猜数字游戏，计算机随机生成一个三位数，用户输入一个数字，计算机判断数字大小，如果猜对了，游戏结束，否则继续猜。(见A1的GuessNumber类或如下代码)
 ```java
-package com.rasion.main;
-import java.util.Scanner;
-import static com.rasion.main.BasicJava.getRandom;
-public class GuessNumber {
+    import java.util.Scanner;
+    import static com.rasion.main.BasicJava.getRandom;
+    public class GuessNumber {
     public static void main(String[] args) {
         while (true) {
             guessNumberInterface();
@@ -341,9 +340,8 @@ public class GuessNumber {
 ##### 2、验证码(VerificationCode)
 说明：可以生成一个指定位数的验证码，验证码由数字和字母组成。(见A1的VerificationCode类或如下代码)
 ```java
-package com.rasion.main;
-import java.util.Scanner;
-public class VerificationCode {
+    import java.util.Scanner;
+    public class VerificationCode {
     public static void main(String[] args) {
         //生成指定位数的验证码，验证码由数字、大小写字母组成
         System.out.println("请输入验证码位数：");
@@ -374,8 +372,7 @@ public class VerificationCode {
 
 说明：在1-1000之间找到所有素数。(见A1的FindPrime类或如下代码)
 ```java
-package com.rasion.main;
-public class FindPrime {
+    public class FindPrime {
     public static void main(String[] args) {
     //找到所有素数
     int temp=0;

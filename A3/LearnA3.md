@@ -47,6 +47,7 @@ public class LearnException{
         System.out.println(String.valueOf(null));//java.lang.NullPointerException——空指针异常
         System.out.println("程序结束");
     }
+  //这里的 throws 就是在声明：这个方法在执行过程中“可能抛出这些异常” 但要注意一点：它只是声明可能抛出，并不一定真的会抛出
     public static void CompileShow() throws ParseException, FileNotFoundException {//两个异常一起抛可以只抛一个Exception父异常
         System.out.println("程序开始");
         //编译时异常：编译阶段报错，继承自 Exception
@@ -401,7 +402,7 @@ list1.add("田五");list1.add("田六");...//添加元素
         while (it.hasNext()){
             String name=it.next();
             if(name.contains("田")){
-                it.remove();//这里是直接用迭代器自己方法删除指向的元素
+                it.remove();//这里是直接用迭代器自己方法删除指向的元素 迭代器读取内容后不要使用list去更改
                 //list1.remove(name);//要是这样删除就会报异常，会出现并发修改异常
         }
     }
@@ -769,6 +770,11 @@ public static void getdouble(){
     Stream<Double> stream1 = Stream.of(1.1, 2.2, 3.3);
     //统计合并的流的长度
     System.out.println(Stream.concat(stream1,list.stream()).count());
+  	//操作元素
+ 		List<String> list = List.of("张三", "李四", "王五");
+    list.stream()
+        .peek(s -> System.out.println("元素: " + s))
+        .forEach(System.out::println);
 }
 ```
 #### (四)、Stream流终结方法
@@ -989,7 +995,7 @@ System.out.println(new String(bytes,"GBK"));//通过GBK解码
 · 释放资源更完善的方式：`try(...资源对象){...代码主体}catch(Exception e){e.printStackTrace();}`
 
 · 资源对象：继承了AutoCloseable或Closeable接口的对象，如FileInputStream等
-```
+```java
 //复制文件：文件->创建字节输入流管道->read->字节数组->write->创建字节输出流管道->另一个文件
 public static void copyFile(){//复制文件的抛出异常
     FileOutputStream fos = null;
@@ -1029,7 +1035,7 @@ public static void copyFile() throws Exception {
 }
 ```
 文件字节输入流，输出流实例：
-```
+```java
 public static void readFile() throws Exception {//文件字节输入流
     //文件字节输入流读取文件中的字节数组到内存中去
     //1、创建文件字节输入流对象
@@ -1075,7 +1081,7 @@ public static void writeFile() throws Exception{//字节输出流，不覆盖要
 
 #### (三)、字符流适合做数据的处理，如文本的读取。
 字符输出流写出数据后，必须刷新流，或者关闭流，写出的数据才能生效。(先写在内存缓冲区，刷新.flush()缓冲区，才能写出数据，降低磁盘压力)
-```
+```java
 public static void readFile() throws Exception {
     //文件字符输入流读取文件中的字节数组到内存中去
     try(Reader fr = new FileReader("resource/hello.txt");){
@@ -1111,7 +1117,7 @@ public static void writeFile(){//字符输出流，不覆盖要加true
 |--------------------------------------------|----------------------------|
 | `public BufferedInputStream(InputStream is)` | 把低级的流包装成高级的缓冲字节输入流，提升读数据性能 |
 | `public BufferedOutputStream(OutputStream os)` | 把低级的流包装成高级的缓冲字节输出流，提升写数据性能 |
-```
+```java
 public static void copyFile(String source, String destination) {
     try(// 创建一个文件输入流
         InputStream is=new FileInputStream(source);
@@ -1144,7 +1150,7 @@ public static void copyFile(String source, String destination) {
 | **方法**-                           | **说明**                     |
 |public String readLine()| 读取一行数据，返回字符串，读到文件末尾返回null |
 |public void newLine()| 写一行数据，换行，默认是\r\n，可以自定义换行符 |
-```
+```java
 public static void bfRW(){
     try(BufferedReader br = new BufferedReader(new FileReader("resource/hello.txt"));//创建一个文件缓冲字符输入流
         BufferedWriter bw = new BufferedWriter(new FileWriter("resource/hello2.txt"))//创建一个文件缓冲字符输出流
@@ -1161,7 +1167,7 @@ public static void bfRW(){
 ```
 #### (五)、性能分析
 默认桶大小设置为8KB，过大没有用，过小影响性能。当低级流读写数据时，桶加大可以媲美高级池。
-```
+```java
 public static void main(String[] args){//见FileIO.performance包的Timetest.java
     //使用低级的字节流一个一个字节的形式复制代码:36.487s，能正常打开,如果桶大小为8KB，则速度为0.015s
     copyFileByte();

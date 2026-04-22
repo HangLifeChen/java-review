@@ -54,5 +54,27 @@ public class Array {
             System.out.println(sc[i]);
         }
     }
+
+    public  static void arrayS(int[] sc){
+        for (int i=0;i<sc.length-1;i++){
+            int k =0;
+            for (int j =i+1;j<sc.length-1;j++){
+                if (j<i) {
+                    k=j;
+                }
+            }
+        }
+    }
+    public static void arrays(int [] sc){
+        for (int i:sc)  {
+
+        }
+    }
+
+    public static void swap(int a, int b){
+        int temp=a;
+        a=b;
+        b=a;
+    }
 }
 

@@ -1,5 +1,6 @@
 package com.rasion.main;
 
+import java.util.Random;
 import java.util.Scanner;
 
 /*相关快捷键操作
@@ -17,6 +18,7 @@ public class BasicJava {
 //        printVariable(5);//(四)、变量
 //        printDataType();//(五)、数据类型
 //        compare(5,6);//(七)、调用方法
+             getRandom();
 //        System.out.println(getRandom(5));//(七)、调用方法，获取一个指定位数的随机数
 //        System.out.println(getRandom());//(七)、调用方法，获取一个随机数，重载getRandom
 //        divide(5,0);//(七)、调用方法，除数不能为0,使用return 提前结束方法
@@ -103,7 +105,12 @@ public class BasicJava {
     }
     //没有返回值的随机数的方法重载
     public static int getRandom(){
-        return (int)(Math.random()*100);
+        Random rd1 = new Random();
+        // 产生各种类型的随机数
+        // 按均匀分布产生整数
+        int a=rd1.nextInt(100);
+        System.out.println("int: " +a);
+        return a;
     }
     //无返回值的方法中单独使用return，提前结束方法
     public static void divide(int a,int b){
@@ -139,6 +146,11 @@ public class BasicJava {
         Scanner scanner=new Scanner(System.in);//创建一个Scanner对象,得到一个Scanner扫描对象
         System.out.println("请输入一个整数：");
         int n=scanner.nextInt();//获取用户输入的整数
+
+        //遇到 空格 / 回车 / Tab 就结束
+        String s1=scanner.next();
+        //只有遇到回车再结束
+        String s2=scanner.nextLine();
         int result=1;
         for(int i=1;i<=n;i++){
             result*=i;

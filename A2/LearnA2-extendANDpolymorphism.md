@@ -126,9 +126,11 @@ class zilei extends fulei{
 >
 > 子类重写时，访问权限必须大于或等于父类的该方法的权限（public>protected>default>private）
 >
->重写的方法，必须与重写前的方法具有相同的参数列表和返回值类型（返回值类型一样或更小）。
-> 
->私有方法（不能被继承所以不能被重写）和静态方法（自己调用）不能被重写，否则报错。
+> 重写的方法，必须与重写前的方法具有相同的参数列表和返回值类型（返回值类型一样或更小）。
+>
+> 子类重写父类方法后，仍然可以通过supper，调用父类方法
+>
+> 私有方法（不能被继承所以不能被重写）和静态方法（自己调用）不能被重写，只能被隐藏，否则报错。
 ```java
 public class TestOverride {
     public static void main(String[] args) {//二、4、方法重写
@@ -147,6 +149,34 @@ class cat extends animal{
     public void eat(){System.out.println("cat eat!!!");}
 }
 ```
+```java
+class Parent {
+    // 实例方法
+    public void instanceMethod() {
+        System.out.println("父类实例方法");
+    }
+    
+    // 静态方法
+    public static void staticMethod() {
+        System.out.println("父类静态方法");
+    }
+}
+
+class Child extends Parent {
+    @Override
+    public void instanceMethod() {  //真正的重写
+        System.out.println("子类实例方法");
+    }
+    
+    // @Override   //这里加 @Override 会编译报错
+    public static void staticMethod() {  // 这不是重写，是隐藏
+        System.out.println("子类静态方法");
+    }
+}
+```
+
+
+
 #### 5、重写toString方法
 ```java
 public class TestOverride {
@@ -294,7 +324,7 @@ public class TestPolymorphism {
     金卡办理时：存入金额必须>=5000元，优惠：8折，消费满200提供免费洗车服务卡卷
     银卡办理时：存入金额必须>=2000元，优惠：9折
     需求：加油站支付机的存款和消费程序
-
+    
     具体见com.rasion.extendANDpolymorphism.Demo包
     包中没有实现办理业务
 ### 四、参考

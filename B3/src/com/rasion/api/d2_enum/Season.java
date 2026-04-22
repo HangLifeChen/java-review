@@ -10,8 +10,6 @@ package com.rasion.api.d2_enum;
 * */
 public enum Season {
     SPRING("春意盎然"),SUMMER("热情似火"),FALL("秋高气爽"),WINTER("白雪皑皑");
-
-
     private String desc;// 描述季节
     public void show(){
         System.out.println(desc);

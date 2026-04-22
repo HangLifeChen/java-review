@@ -1285,7 +1285,24 @@ IO框架
 | public static void forceMkdir(File directory)                                              | 创建文件夹，如果文件夹已经存在，则不抛异常 |
 | public static void writeStringToFile(File file,String data,String charname,boolean append) | 把字符串写入文件 |
 | public static String readFileToString(File file)                                           | 读取文件内容，返回字符串 |
-### 十、学习链接
+### 十、工具类
+
+#### （1）Hutool
+
+​	https://www.hutool.cn/docs
+
+#### （2）lombok
+
+​	https://lombok.com.cn/features/Data
+
+学习过程中要开启这个
+
+![image-20260422115305145](img/image-20260422115305145.png)
+
+![image-20260422114934217](img/image-20260422114934217.png)
+
+### 十一、学习链接
+
 1. [黑马程序员Java课程](https://www.bilibili.com/video/BV1gb42177hm?p=114&spm_id_from=pageDriver&vd_source=2140b8696bb75ad7bd33e1195bf24372)
 2. [A3部分代码仓库](https://gitee.com/RasionLS/java-learn/tree/master/A3)
 3. [泛型：继承和通配符](https://blog.csdn.net/yubin1285570923/article/details/108135595)

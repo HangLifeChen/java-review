@@ -63,6 +63,6 @@ public class Test {
 //        扩展 : 2.5 ---->包装类对象
         Double d1 = Double.valueOf(2.5);
         double d2 = Double.parseDouble("2.5");
-        boolean b1 = Boolean.parseBoolean("true");
+        boolean b1 = true;
     }
 }

@@ -22,7 +22,5 @@ public class Test2 {
 
         System.out.println(Integer.MAX_VALUE);
         System.out.println(Integer.MIN_VALUE);
-
-
     }
 }

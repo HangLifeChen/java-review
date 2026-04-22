@@ -10,7 +10,7 @@ public class threadsMethods {
 //        t2.setName("线程2");
         t2.start();
 
-        //获取当前线程
+        //获取当前线程 在Runnable中先Thread.currentThread()获取线程 这是static方法;
         Thread m=Thread.currentThread();
         System.out.println(m.getName());//输出：main
         for(int i=0;i<5;i++){

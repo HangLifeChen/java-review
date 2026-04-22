@@ -1,4 +1,7 @@
 package com.rasion.api.d2_enum;
+
+import java.util.Arrays;
+
 /*
     1 枚举
         枚举是一种特殊类。
@@ -50,13 +53,12 @@ public class Test1 {
         Season spring = Season.SPRING;
         spring.show();
 
-
         int index = spring.ordinal();
         System.out.println(index);
 
         Season spring1 = Season.valueOf("SPRING");
         System.out.println(spring1 == spring);
-
+        System.out.println(Arrays.toString(Season.values()));
 
     }
 }

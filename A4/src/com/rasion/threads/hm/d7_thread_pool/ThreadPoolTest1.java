@@ -1,6 +1,11 @@
 package com.rasion.threads.hm.d7_thread_pool;
 
 
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 /*
     目标：掌握线程池的创建。
 
@@ -23,8 +28,17 @@ package com.rasion.threads.hm.d7_thread_pool;
  */
 public class ThreadPoolTest1 {
     public static void main(String[] args) {
+        ThreadPoolExecutor threadPoolExecutor=new ThreadPoolExecutor(
+                3,
+                10,
+                60,
+                TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(20),
+                Executors.defaultThreadFactory(),
+                new ThreadPoolExecutor.AbortPolicy()
+        );
 
-
+        threadPoolExecutor.allowCoreThreadTimeOut(true);//核心线程数是否回收 默认是false 不回收
     }
 }
 

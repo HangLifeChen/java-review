@@ -31,7 +31,6 @@ public class Test4_DateTimeFormatter {
         LocalDateTime localDateTime = now.plusDays(20);
         System.out.println(localDateTime);
 
-
         ZoneId.of("Asia/Shanghai");
     }
 }

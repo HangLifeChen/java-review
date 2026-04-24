@@ -314,7 +314,8 @@ System.out.println(i1+2);//100
 
 2、两类集合：单列集合、双列集合。
 
-3、`Collection<E>`、L`ist<E>`、`Set<E>`和`Map<K,V>`只是接口，其子类都是其实现类。
+3、`Collection<E>`、`List<E>`、`Set<E>`和`Map<K,V>`只是接口，其子类都是其实现类。
+
 >**Collection代表单列集合**，每个元素（数据）只包含一个值
 > 
 >**Map代表双列集合**，每个元素包含两个值，key和value（键值对）

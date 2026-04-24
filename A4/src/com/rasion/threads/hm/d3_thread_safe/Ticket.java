@@ -6,6 +6,7 @@ public class Ticket implements Runnable{
     @Override
     public void run() {
         while (true){
+            //同步代码块 任何对象都可以成为锁对象，锁对象唯一
             if(ticket<=0){
                 break;
             }else {
@@ -18,7 +19,10 @@ public class Ticket implements Runnable{
                 System.out.println(Thread.currentThread().getName()+"卖出了第"+ticket+"号票");
                 ticket--;
             }
+
+            Thread.yield();
         }
     }
+
 
 }

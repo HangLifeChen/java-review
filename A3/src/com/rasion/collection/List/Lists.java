@@ -13,6 +13,7 @@ public class Lists {
         list.add("world");
         list.add("java");
         list.add("java");
+        list.remove("java");
         System.out.println(list);//输出：[hello, world, java, java]有序，可重复
         System.out.println(list.get(0));//有索引
 

@@ -36,7 +36,6 @@ public class Test3_LocalDateTime {
         LocalDateTime ldt6 = ldt.minusYears(2);
         LocalDateTime ldt7 = ldt.minusMinutes(3);
 
-
         // 5、获取指定日期和时间的LocalDateTime对象：
         // public static LocalDateTime of(int year, Month month, int dayOfMonth, int hour,
         //                                  int minute, int second, int nanoOfSecond)
